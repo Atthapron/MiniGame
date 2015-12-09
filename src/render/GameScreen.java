@@ -94,6 +94,7 @@ public class GameScreen extends JComponent {
 
 		ArrayList<IRenderable> entities = (ArrayList<IRenderable>) RenderableHolder
 				.getInstance().getRenderableList();
+		
 		for (int index = 0; index < entities.size(); index++) {
 			if (entities.get(index).isVisible())
 				entities.get(index).draw(g2d);
