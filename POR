@@ -1,1 +1,19 @@
-check in
+GameManager
+	- ยังไม่ทำ
+	
+GameScreen
+ 	- mouseListener
+ 	- mousemotionListener
+ 	- paintComponent วาดตัวเกม ตามค่า Z
+ 	
+ GameTitle
+ 	- new JPanel สำหรับใส่ GameScreen
+ 	
+ GameWindow
+ 	- new JFrame
+ 	- เอา scene มาใส่
+ 	- swithScene
+ 	- getScene
+ 	
+ RenderableHolder 
+ 	- เก็บ entity และ sort ตามค่า Z

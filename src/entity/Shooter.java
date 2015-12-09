@@ -1,4 +1,4 @@
-package render;
+package entity;
 
 public class Shooter {
 	private Object character;

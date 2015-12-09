@@ -1,9 +1,9 @@
 package render;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public interface IRenderable {
 	public int getZ();
-	public void draw(Graphics g2);
-	public boolean isDestroyed();
+	public void draw(Graphics2D g2d);
+	public boolean isVisible();
 }
