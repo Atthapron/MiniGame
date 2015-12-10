@@ -17,8 +17,9 @@ public abstract class Shooter {
 		return this.profile;
 	}
 	
-	public abstract void inRange(Zombie zombie);
+	public abstract boolean isInRange(Zombie zombie);
 	public abstract void shoot(Zombie zombie);
+	public abstract boolean canHire();
 	public abstract void hire();
 	public abstract void exclude();
 	
