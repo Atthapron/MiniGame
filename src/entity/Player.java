@@ -8,17 +8,23 @@ public class Player {
 		Player.money = 0;
 	}
 	
-	public void addMoney(int getMoney){
+	public static void addMoney(int getMoney){
 		Player.money += getMoney;
 	}
-	public void pay(int payMoney){
+	public static  void pay(int payMoney){
 		Player.money -= payMoney;
 	}
-	public void addScore(int score){
+	public  static void addScore(int score){
 		Player.score += score;
 	}
-	public void reScore(){
+	public static void reScore(){
 		Player.score = 0;
+	}
+	public int getMoney(){
+		return Player.money;
+	}
+	public int getScore(){
+		return Player.score;
 	}
 	
 
