@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 public class Resource {
 	//screen - incomplete
 	public static BufferedImage tile;
+	public static BufferedImage titleScene;
 	
 	// enemy
 	public final static Font standardFont = new Font("Tahoma", Font.BOLD, 30);
@@ -46,6 +47,8 @@ public class Resource {
 			//screen
 			tile = ImageIO.read(loader
 					.getResource("res/screen/tile.png"));
+			titleScene = ImageIO.read(loader
+					.getResource("res/screen/title.png"));
 			//enemy
 			zombieBoyWalkSprite = ImageIO.read(loader
 					.getResource("res/enemy/zombieBoy.png"));
