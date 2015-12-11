@@ -30,17 +30,10 @@ public class Field implements IRenderable{
 				return field[y][x];
 			}
 			
-			/*private int getTileIndex(int x,int y){
-				int terrain = getTerrain(x, y);
-				if(terrain <= 0 && terrain >= -2)
-					return -terrain;
-				else
-					return 0;
-			}*/
 			
 			@Override
 			public int getZ() {
-				return 2000;
+				return -10;
 			}
 
 			@Override
@@ -48,7 +41,6 @@ public class Field implements IRenderable{
 				
 				for(int x=0; x<= field[0].length; x++){
 					for(int y=0; y<= field.length; y++){
-						if(getTerrain(x,y) == 0) // 
 							g2d.drawImage(Resource.tile.getSubimage(getTerrain(x, y)*64, 0, 64, 64), null, x*64, y*64);//
 						
 					}
