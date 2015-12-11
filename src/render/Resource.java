@@ -3,105 +3,68 @@ package render;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.applet.*;
-import javax.imageio.ImageIO;
 
+import javax.imageio.ImageIO;
 
 //ขาดเสียงประกอบ นะจ๊ะ
 public class Resource {
-	//screen - incomplete
-	public static BufferedImage tile;
-	public static BufferedImage titleScene;
-	
-	// enemy
-	public final static Font standardFont = new Font("Tahoma", Font.BOLD, 30);
-	public static BufferedImage zombieBoyWalkSprite;
-	public static BufferedImage zombieBoyDieSprite;
 
-	public static BufferedImage zombieDoctorWalkSprite;
-	public static BufferedImage zombieDoctorDieSprite;
-
-	// shooter
-	public static BufferedImage handGunIdleSprite;
-	public static BufferedImage handGunTurnSprite;
-	public static BufferedImage handGunShootSprite;
-
-	public static BufferedImage shotGunIdleSprite;
-	public static BufferedImage shotGunTurnSprite;
-	public static BufferedImage shotGunShootSprite;
-
-	public static BufferedImage rifleIdleSprite;
-	public static BufferedImage rifleTurnSprite;
-	public static BufferedImage rifleShootSprite;
-
-	// sound
-	public static AudioClip zombieSound;
-	public static AudioClip zombieDieSound;
-	public static AudioClip shootSound;
-	public static AudioClip collectSound;
-	public static AudioClip bgSound;
-
-
-	static {
+	public static BufferedImage getImage(String directory) {
 		try {
 			ClassLoader loader = RenderableHolder.class.getClassLoader();
-			//screen
-			tile = ImageIO.read(loader
-					.getResource("res/screen/tile.png"));
-			titleScene = ImageIO.read(loader
-					.getResource("res/screen/title.png"));
-			//enemy
-			zombieBoyWalkSprite = ImageIO.read(loader
-					.getResource("res/enemy/zombieBoy.png"));
-			zombieBoyDieSprite = ImageIO.read(loader
-					.getResource("res/enemy/zombieBoyDie.png"));
-			zombieDoctorWalkSprite = ImageIO.read(loader
-					.getResource("res/enemy/zombieDoc.png"));
-			zombieDoctorDieSprite = ImageIO.read(loader
-					.getResource("res/enemy/zombieDocDie.png"));
-			//shooter
-			handGunIdleSprite = ImageIO.read(loader
-					.getResource("res/shooter/hidle.png"));
-			handGunTurnSprite = ImageIO.read(loader
-					.getResource("res/shooter/hturn.png"));
-			handGunShootSprite = ImageIO.read(loader
-					.getResource("res/shooter/hshoot.png"));
-			
-			shotGunIdleSprite = ImageIO.read(loader
-					.getResource("res/shooter/sidle.png"));
-			shotGunTurnSprite  = ImageIO.read(loader
-					.getResource("res/shooter/sturn.png"));
-			shotGunShootSprite = ImageIO.read(loader
-					.getResource("res/shooter/sshoot.png"));
-
-			rifleIdleSprite = ImageIO.read(loader
-					.getResource("res/shooter/ridle.png"));
-			rifleTurnSprite  = ImageIO.read(loader
-					.getResource("res/shooter/rturn.png"));
-			rifleShootSprite = ImageIO.read(loader
-					.getResource("res/shooter/rshoot.png"));
-			
-			//sound
-			zombieSound = Applet
-					.newAudioClip((loader.getResource("res/sound/zombie.wav")).toURI()
-							.toURL());
-			zombieDieSound = Applet.newAudioClip((loader
-					.getResource("res/sound/zombieDie.wav")).toURI().toURL());
-			shootSound = Applet.newAudioClip((loader.getResource("res/sound/shoot.wav"))
-					.toURI().toURL());
-			collectSound = Applet.newAudioClip((loader
-					.getResource("res/sound/collect.wav")).toURI().toURL());
-			bgSound = Applet.newAudioClip((loader.getResource("res/sound/bg.wav"))
-					.toURI().toURL());
-	
-
+			return ImageIO.read(loader.getResource(directory));
 		} catch (Exception e) {
-			System.out.println("cannot load resources");
-			e.printStackTrace();
+			System.out.println("cannot load "+directory);
+			return null;
 		}
 	}
 
-	public Resource() {
-		super();
+	public static AudioClip getSound(String directory) {
+		try {
+			ClassLoader loader = RenderableHolder.class.getClassLoader();
+			return Applet.newAudioClip((loader.getResource(directory)).toURI()
+					.toURL());
+		} catch (Exception e) {
+			System.out.println("cannot load "+directory);
+			return null;
+		}
 	}
+	// screen - incomplete
+	public static BufferedImage tile = getImage("res/screen/tile.png");
+	public static BufferedImage titleScene = getImage("res/screen/title.png");
+	public static BufferedImage newGame_bt =  getImage("res/screen/newgame.png");
+	public static BufferedImage newGameOp_bt =  getImage("res/screen/newgameOp.png");
+	public static BufferedImage highScore_bt =  getImage("res/screen/highscore.png");
+	public static BufferedImage highScoreOp_bt =  getImage("res/screen/highscoreOp.png");
+	public static BufferedImage iconEnemy =  getImage("res/screen/iconenemy.png");
+	public static BufferedImage iconShooter =  getImage("res/screen/iconshooter.png");
+
 	
+	// enemy
+	public static BufferedImage zombieBoyWalkSprite = getImage("res/enemy/zombieBoyWalk.png");
+	public static BufferedImage zombieBoyDieSprite = getImage("res/enemy/zombieBoyDie.png");
+
+	public static BufferedImage zombieDoctorWalkSprite = getImage("res/enemy/zombieDocWalk.png");
+	public static BufferedImage zombieDoctorDieSprite = getImage("res/enemy/zombieDocDie.png");
+
+	// shooter
+	public static BufferedImage handGunIdleSprite = getImage("res/shooter/hidle.png");
+	public static BufferedImage handGunTurnSprite = getImage("res/shooter/hturn.png");
+	public static BufferedImage handGunShootSprite = getImage("res/shooter/hshoot.png");
+
+	public static BufferedImage shotGunIdleSprite = getImage("res/shooter/sidle.png");
+	public static BufferedImage shotGunTurnSprite = getImage("res/shooter/sturn.png");
+	public static BufferedImage shotGunShootSprite = getImage("res/shooter/sshoot.png");
+
+	public static BufferedImage rifleIdleSprite = getImage("res/shooter/ridle.png");
+	public static BufferedImage rifleTurnSprite = getImage("res/shooter/rturn.png");
+	public static BufferedImage rifleShootSprite = getImage("res/shooter/rshoot.png");
+
+	// sound
+	public static AudioClip zombieSound = getSound("res/sound/zombie.wav");
+	public static AudioClip zombieDieSound = getSound("res/sound/zombieDie.wav");
+	public static AudioClip shootSound = getSound("res/sound/shoot.wav");
+	public static AudioClip coinSound = getSound("res/sound/coin.wav");
+	public static AudioClip bgSound = getSound("res/sound/bg.wav");
+
 }

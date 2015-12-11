@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 
 public class GameScreen extends JComponent {
-	public static int screenWidth = 640;
+	public static int screenWidth = 1024;
 	public static int screenHeight = 640;
-	
+
 	public GameScreen() {
 		super();
-
-		setPreferredSize(new Dimension(screenWidth,screenHeight));
+		applyResize();
+		setPreferredSize(new Dimension(screenWidth, screenHeight));
 		setDoubleBuffered(true); // draw faster
 		setVisible(true);
 
@@ -90,15 +90,19 @@ public class GameScreen extends JComponent {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setBackground(Color.BLACK);
 
 		ArrayList<IRenderable> entities = (ArrayList<IRenderable>) RenderableHolder
 				.getInstance().getRenderableList();
-		
+		System.out.println(entities.size());
 		for (int index = 0; index < entities.size(); index++) {
 			if (entities.get(index).isVisible())
 				entities.get(index).draw(g2d);
 		}
+	}
+
+	protected void applyResize() {
+		setPreferredSize(new Dimension(screenWidth, screenHeight));
+		validate();
 	}
 
 }
