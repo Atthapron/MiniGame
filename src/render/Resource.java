@@ -38,6 +38,10 @@ public class Resource {
 	public static BufferedImage highScoreOp_bt =  getImage("res/screen/highscoreOp.png");
 	public static BufferedImage iconEnemy =  getImage("res/screen/iconenemy.png");
 	public static BufferedImage iconShooter =  getImage("res/screen/iconshooter.png");
+	public static BufferedImage tree =  getImage("res/screen/tree.png");
+	public static BufferedImage home =  getImage("res/screen/home.png");
+	public static BufferedImage start_bt =  getImage("res/screen/start.png");
+
 
 	
 	// enemy
