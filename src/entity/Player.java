@@ -20,10 +20,10 @@ public class Player {
 	public static void reScore(){
 		Player.score = 0;
 	}
-	public int getMoney(){
+	public static int getMoney(){
 		return Player.money;
 	}
-	public int getScore(){
+	public static int getScore(){
 		return Player.score;
 	}
 	
