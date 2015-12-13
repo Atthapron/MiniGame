@@ -1,8 +1,13 @@
-package render;
+package entity;
 
 import java.awt.Graphics2D;
 
+import render.DrawingUtility;
+import render.IRenderable;
+import render.RenderableHolder;
+
 public class PlayerStatus implements IRenderable {
+	private boolean isDestroyed=false;
 	private int remainingEnemyB = 0;
 	private int remainingEnemyD = 0;
 	private int maxEnemyB = 0;
@@ -151,13 +156,13 @@ public class PlayerStatus implements IRenderable {
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return true;
+		return !isDestroyed;
 	}
 
 	@Override
 	public boolean isDestroyed() {
 		// TODO Auto-generated method stub
-		return false;
+		return isDestroyed;
 	}
 
 }
