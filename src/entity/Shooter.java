@@ -9,9 +9,10 @@ import java.util.Comparator;
 
 import input.InputUtility;
 import render.IRenderable;
+import render.Resource;
 import utility.Maths;
 
-public class Shooter implements IRenderable{
+public class Shooter implements IRenderable, Runnable{
 	private String type;
 	private Point position;// top left
 	private int cost;
@@ -20,16 +21,16 @@ public class Shooter implements IRenderable{
 	private int shootDelay;
 	private int shootDelayCount;
 	
-	private boolean tryToBuy;
+	public boolean tryToBuy;
 	private boolean isBought;
 
 	
 	private BufferedImage image;
+	private BufferedImage shootImage;
 	private ArrayList<Zombie> zombiesInRange;
 	
 	
-	public Shooter(String type, BufferedImage image){
-		this.image = image;
+	public Shooter(String type){
 		this.shootDelayCount = 0;
 		this.type = type;
 		if(type.equalsIgnoreCase("handgun")){
@@ -37,18 +38,26 @@ public class Shooter implements IRenderable{
 			this.attack = 1;
 			this.range = 5;
 			this.shootDelay = 5;
+			this.image = Resource.handGunIdleSprite;
+			this.shootImage = Resource.handGunShootSprite;
+			
 		}
 		if(type.equalsIgnoreCase("rifle")){
 			this.cost = 10;
 			this.attack = 6;
 			this.range = 8;
 			this.shootDelay = 1;
+			this.image = Resource.rifleIdleSprite;
+			this.shootImage = Resource.rifleShootSprite;
+			
 		}
 		if(type.equalsIgnoreCase("shotgun")){
 			this.cost = 15;
 			this.attack = 8;
 			this.range =  3;
 			this.shootDelay = 3;
+			this.image = Resource.shotGunIdleSprite;
+			this.shootImage = Resource.shotGunShootSprite;
 		}
 			
 	}
@@ -89,12 +98,16 @@ public class Shooter implements IRenderable{
 		});
 		
 	}
-	public void shoot(){
+	public boolean shoot(){
 		if(ready()){
 			zombiesInRange.get(0).takeDamage(attack);
 			shootDelayCount = 0;
+			
+			Resource.shootSound.play();
+			
+			return true;
 		}
-		return;
+		return false;
 	}
 	public boolean canBuy(){
 		if(Player.getMoney() >= cost)return true;
@@ -110,8 +123,9 @@ public class Shooter implements IRenderable{
 	public void buy(Point p){
 		this.tryToBuy = false;
 		Player.pay(cost);
-		setCenterAt(p.x, p.y);
+		setCenterAt((p.x/64+1)*64+32, (p.y-75/64+1)*64+32);
 		this.isBought = true;
+		Resource.coinSound.play();
 	}
 	
 	
@@ -149,12 +163,16 @@ public class Shooter implements IRenderable{
 		if(this.isBought){
 			g2d.drawImage(image.getSubimage(0, 0, 64, 64), position.x, position.y, 64, 64, null);
 		}
+		
+		
 		if(zombiesInRange.size() > 0){
 			Zombie nearestZombie = zombiesInRange.get(0);
 			double theta = Math.asin((nearestZombie.position.y - position.y)/Maths.distance(nearestZombie.position, getCenterPoint()));
 			if(nearestZombie.position.x < position.x)theta = Math.PI - theta;
 				g2d.rotate(theta, position.x + 32, position.y + 32);
-			
+		}
+		if(shoot()){
+			//g2d.drawImage(img, x, y, width, height, observer)
 		}
 	}
 
@@ -162,14 +180,32 @@ public class Shooter implements IRenderable{
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return true;
+		if(this.isBought)return true;
+		return false;
 	}
 
 
 	@Override
 	public boolean isDestroyed() {
 		// TODO Auto-generated method stub
-		return false;
+		if(this.isBought)return false;
+		return true;
+	}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try{
+			Thread.sleep(50);
+			while(isBought){
+				if(zombiesInRange.size() > 0){
+					if(ready())shoot();
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 
