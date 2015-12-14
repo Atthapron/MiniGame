@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import input.InputUtility;
+
 public class GameTitle extends JPanel{
 
 	public GameTitle() {
@@ -41,6 +43,7 @@ public class GameTitle extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//fill code
+				InputUtility.startGame = true;
 			}
 		});
 		
@@ -48,8 +51,7 @@ public class GameTitle extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			
-				//fill code
+				//new HighScore();
 			}
 		});
 	}

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import entity.Field;
 import entity.PlayerStatus;
+import entity.Shooter;
 import render.GameScreen;
 import render.Resource;
 
@@ -17,7 +18,9 @@ public class DrawingUtility {
 			.getInstance(AlphaComposite.SRC_OVER, 0.7f);
 	protected static final AlphaComposite opaque = AlphaComposite.getInstance(
 			AlphaComposite.SRC_OVER, 1);
-
+	
+	
+	
 	public static void drawStatusBar(Graphics2D g2d, int remainingEnemyB,
 			int remainingEnemyD, int maxEnemyB, int maxEnemyD, int coin,
 			boolean isPointOverHandGun, boolean isPointOverShotGun,
@@ -32,7 +35,7 @@ public class DrawingUtility {
 		g2d.setFont(smallFont);
 		g2d.drawString(remainingEnemyB + "/" + maxEnemyB, 55, 10);
 		g2d.drawString(remainingEnemyB + "/" + maxEnemyB, 119, 10);
-
+		
 		// set of shooter icon
 		g2d.drawImage(Resource.iconShooter, null, 228, 10);
 		g2d.setColor(Color.white);
@@ -40,7 +43,10 @@ public class DrawingUtility {
 		g2d.drawString("Hand Gun : 5", 233, 10);
 		g2d.drawString("Shot Gun : 15", 297, 10);
 		g2d.drawString("Rifle : 30", 361, 10);
-
+		
+		
+		
+		
 		// start zombie button
 		g2d.drawImage(Resource.start_bt, null, 480, 10);
 		g2d.setColor(Color.white.darker());
@@ -56,28 +62,26 @@ public class DrawingUtility {
 		if (isPointOverHandGun) {
 			g2d.setComposite(translucent);
 			g2d.fillRect(PlayerStatus.xHandGunIcon, PlayerStatus.yHandGunIcon,
-					PlayerStatus.xHandGunIcon + 64,
-					PlayerStatus.yHandGunIcon + 64);
+					64,64);
 			g2d.setComposite(opaque);
 		}
 
-		else if (isPointOverShotGun) {
+		if (isPointOverShotGun) {
 			g2d.setComposite(translucent);
 			g2d.fillRect(PlayerStatus.xShotGunIcon, PlayerStatus.yShotGunIcon,
-					PlayerStatus.xShotGunIcon + 64,
-					PlayerStatus.yShotGunIcon + 64);
+					64,64);
 			g2d.setComposite(opaque);
 		}
 
-		else if (isPointOverRifle) {
+		 if (isPointOverRifle) {
 			g2d.setComposite(translucent);
 			g2d.fillRect(PlayerStatus.xRifleIcon, PlayerStatus.yRifleIcon,
-					PlayerStatus.xRifleIcon + 64, PlayerStatus.yRifleIcon + 64);
+					64, 64);
 			g2d.setComposite(opaque);
-		} else if (isPointOverStart) {
+		}  if (isPointOverStart) {
 			g2d.setComposite(translucent);
 			g2d.fillRect(PlayerStatus.xStratIcon, PlayerStatus.yStartIcon,
-					PlayerStatus.xStratIcon + 64, PlayerStatus.yStartIcon + 64);
+					64, 64);
 			g2d.setComposite(opaque);
 		}
 

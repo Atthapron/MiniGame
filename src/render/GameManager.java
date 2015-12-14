@@ -14,13 +14,11 @@ import input.InputUtility;
 import utility.Direction;
 
 public class GameManager {
-	private static GameManager instance;
 	
 	private Field field;
 	private ArrayList<Zombie> zombies;
 	private ArrayList<Shooter> shooters;
 	private static final int SPAWN_DEALY = 100;
-	public Thread startGameThread;
 	private int spawnDelayCounter;
 	private int zombieBoyCounter;
 	private int zombieDoctorCouter;
@@ -66,24 +64,10 @@ public class GameManager {
 			}
 			
 		});
-		startGameThread = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				try {
-					//เมื่อกด นิวเกม
-					placeShooterThread.join();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					Thread.interrupted();
-				}
-				
-			
-			}
-		});
+	
 	}
 	public void update(){
+		RenderableHolder.getInstance().add(field);
 		if(isPause){
 			try {
 				zombieSpawnThread.wait();
@@ -162,11 +146,7 @@ public class GameManager {
 		return shooters;
 	}
 	
-	
-	public static GameManager getInstance(){
-		return instance;
-	}
-	
+
 	public boolean canPlace(Shooter shooter){
 		for(int i=0;i<shooters.size();i++){
 			if(shooters.get(i).getCenterPoint() == shooter.getCenterPoint())
@@ -174,6 +154,9 @@ public class GameManager {
 		}
 		return true;
 	}
-	
+	public Thread getPlacedShooterThread(){
+		return placeShooterThread;
+	}
+
 	
 }

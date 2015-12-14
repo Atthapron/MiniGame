@@ -8,7 +8,7 @@ public class InputUtility {
 	private static boolean isLeftDown = false;
 	private static boolean isLeftClickedLastTick = false;
 	public static String type = ""; 
-	
+	public static boolean startGame = false;
 	
 	public static void mouseLeftDown(){
 		isLeftDown = true;
@@ -44,6 +44,12 @@ public class InputUtility {
 		}
 		return false;
 			
+	}
+	public static void updateStartGame(){
+		startGame = false;
+	}
+	public static boolean getStartGame(){
+		return startGame;
 	}
 
 }

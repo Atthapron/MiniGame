@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 
+import input.InputUtility;
 import render.IRenderable;
 import render.RenderableHolder;
 import utility.DrawingUtility;
@@ -32,33 +33,23 @@ public class PlayerStatus implements IRenderable {
 		RenderableHolder.getInstance().add(this);
 	}
 
-	public boolean isPointOverHandGun() {
-		return isPointOverHandGun;
-	}
 
 	public void setPointOverHandGun(boolean isPointOverHandGun) {
 		this.isPointOverHandGun = isPointOverHandGun;
 	}
 
-	public boolean isPointOverShotGun() {
-		return isPointOverShotGun;
-	}
-
+	
 	public void setPointOverShotGun(boolean isPointOverShotGun) {
 		this.isPointOverShotGun = isPointOverShotGun;
 	}
 
-	public boolean isPointOverRifle() {
-		return isPointOverRifle;
-	}
+	
 
 	public void setPointOverRifle(boolean isPointOverRifle) {
 		this.isPointOverRifle = isPointOverRifle;
 	}
 
-	public boolean isPointOverStart() {
-		return isPointOverStart;
-	}
+
 
 	public void setPointOverStart(boolean isPointOverStart) {
 		this.isPointOverStart = isPointOverStart;
@@ -118,26 +109,30 @@ public class PlayerStatus implements IRenderable {
 		return y < 76;
 	}
 
-	public boolean isPointOverHandGun(int x, int y) {
-		isPointOverHandGun = x >= xHandGunIcon && x < xShotGunIcon
+	public static boolean isPointOverHandGun() {
+		int x = InputUtility.mouseX;
+		int y = InputUtility.mouseY;
+		return x >= xHandGunIcon && x < xShotGunIcon
 				&& y >= yHandGunIcon && y <= 74;
-		return isPointOverHandGun;
 	}
 
-	public boolean isPointOverShotGun(int x, int y) {
-		isPointOverShotGun = x >= xShotGunIcon && x < xRifleIcon
+	public boolean isPointOverShotGun() {
+		int x = InputUtility.mouseX;
+		int y = InputUtility.mouseY;
+		return x >= xShotGunIcon && x < xRifleIcon
 				&& y >= yShotGunIcon && y <= 74;
-		return isPointOverShotGun;
 	}
 
-	public boolean isPointOverRifle(int x, int y) {
-		isPointOverRifle = x >= xRifleIcon && x <= xRifleIcon + 64
+	public boolean isPointOverRifle() {
+		int x = InputUtility.mouseX;
+		int y = InputUtility.mouseY;
+		return x >= xRifleIcon && x <= xRifleIcon + 64
 				&& y >= yRifleIcon && y <= 74;
-		return isPointOverRifle;
 	}
-	public boolean isPointOverStart(int x, int y) {
-		isPointOverStart = x>=xStratIcon && x<=xStratIcon+64&& y>=xStratIcon&&y<=74;
-		return isPointOverStart;
+	public boolean isPointOverStart() {
+		int x = InputUtility.mouseX;
+		int y = InputUtility.mouseY;
+		return x>=480 && x<=480+64&& y>=10&&y<=74;
 	}
 	@Override
 	public int getZ() {
@@ -149,8 +144,8 @@ public class PlayerStatus implements IRenderable {
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		DrawingUtility.drawStatusBar(g2d, remainingEnemyB, remainingEnemyD,
-				maxEnemyB, maxEnemyD, coin, isPointOverHandGun,
-				isPointOverShotGun, isPointOverRifle,isPointOverStart);
+				maxEnemyB, maxEnemyD, coin, isPointOverHandGun(),
+				isPointOverShotGun(), isPointOverRifle(),isPointOverStart());
 	}
 
 	@Override

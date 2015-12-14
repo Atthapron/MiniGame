@@ -12,10 +12,13 @@ import utility.DrawingUtility;
 public class Field implements IRenderable {
 	protected boolean isPointOver = false;
 	protected boolean isDestroyed = false;
-
+	protected Building building;
+	
 	public Field() {
 		super();
-		//RenderableHolder.getInstance().add(this);
+		building = new Building(this);
+		RenderableHolder.getInstance().add(this);
+		RenderableHolder.getInstance().add(building);
 	}
 
 	// direction 1 is up

@@ -112,12 +112,14 @@ public class Shooter implements IRenderable, Runnable{
 		}
 		return false;
 	}
-	public boolean canBuy(){
-		if(Player.getMoney() >= cost)return true;
+	public static boolean canBuy(String type){
+		if(type.equalsIgnoreCase("handgun"))return Player.getMoney() > 5;
+		if(type.equalsIgnoreCase("rifle"))return Player.getMoney() > 10;
+		if(type.equalsIgnoreCase("shotgun"))return 	Player.getMoney() > 15; 
 		return false;
 	}
 	public void tryToBuy(){
-		if(!canBuy()){
+		if(!canBuy(type)){
 			return;
 		}
 		this.tryToBuy = true;

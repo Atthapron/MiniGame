@@ -16,7 +16,7 @@ public class Building implements IRenderable {
 
 	public Building(Field field) {
 		this.field = field;
-	//	RenderableHolder.getInstance().add(this);
+		RenderableHolder.getInstance().add(this);
 	}
 	
 	
