@@ -1,0 +1,52 @@
+constucter shooter(String type)
+ 	- จะรับ String ที่เป็นชื่อชนิด ของ ซอมบี้ ซึ้งได้จากตอนกด บน statusbar
+ 	
+ ready()
+ 	- เป็นคำสั่งพร้อมยิง return true เมื่อพร้อมยิง
+ 	
+ addTarget(Zombie zombie)
+ 	- เป็นเมทอด เอา zombie ที่อยู่ในระยะการยิงมาใส่ใน ArrayList 
+ 	- แล้วถ้าตัวไหนหลุดระยะ ก็เอาออกจาก ArrayList
+ 	- แล้วก็ sort เอาตัวที่อยู่ใกล้ที่สุด มาไว้ตำแหน่ง 0 
+ 	
+ shoot()
+ 	- เมื่อพร้อมยิง จะยิงซอมบี้ตัวที่อยู่ใกล้ที่สุด
+ 	
+ canBuy(String type)
+ 	- เป็นตัวเชคว่าเราสามารถซื้อทหารชนิด  type นั้นได้หรือไม่ ซื้อได้ return true
+ 	
+ tryTobuy(){	
+ 	- เป็นคำสั่ง set ค่า boolean tryToBuy ซึ่งเมื่อ trytoBuy เป็น True
+ 	     จะมีการวาดรูปทหารชนิดนั้นๆ ที่กดมาจาก statusbar ซึ่งทหารจะอยู่ตรงกลางเมาส์
+ 
+ buy(Point p)
+ 	- เป็น method ซื้อทหาร 
+ 	- เมื่อกดซื้อทหาร tryToBuy เป็น false รูปทหารที่เคลื่อนที่ไปตามเม้าจะหายไป
+ 	- เซต position ของ shooter โดยใช้ method setCenterAt(int x,int y)
+ 	    จะทำให้ทหารมีจุดศูนย์กลางอยู่ที่ ตำแหน่ง x y ขอบบนซ้าย จะอยู่ตำแหน่ง x - image.getWidth()/2
+ 	    ถ้ารูปนั้นมี 3 frame ก้เป็น  x - image.getWidth()/(2*3) หรือเป็น x-32
+ 	    
+ setCenter(int x, int y)
+   - เซตภาพให้มีจุดศูนย์กลางที่ x y
+   
+  setTopleft(int x, int y)
+  - เซตตำแหน่งบนซ้าย ที่ตำแหน่ง x y
+  
+  getCenterPoint()
+  - return point ที่เป็นจุดศูนย์กลาง
+  
+  getTopLeft()
+  - return point ที่ตำแหย่ง top left
+  
+  
+  run(){
+  	ให้ shooter ที่ถูกซื้อแล้ว ยิงซอมบี้ตัวที่ใกล้สุด
+  
+  
+  
+  
+  
+  
+  
+  
+  

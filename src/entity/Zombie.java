@@ -19,6 +19,7 @@ public class Zombie implements IRenderable,Runnable{
 	protected int hp;
 	protected int score;
 	protected int money;
+	protected boolean isVisible;
 	
 	protected BufferedImage image;
 	protected BufferedImage diedImage;
@@ -29,6 +30,7 @@ public class Zombie implements IRenderable,Runnable{
 		this.direction = direction;
 		this.field = field;
 		this.spawnZombie = 500;
+		this.isVisible = true;
 		
 		if(type.equalsIgnoreCase("boyZombie")){
 			this.hp = 10;
@@ -137,24 +139,30 @@ public class Zombie implements IRenderable,Runnable{
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		if(!isDestroyed())
-			new GameAnimation(image, 8,30,speed,direction,0);
-		else
-			new GameAnimation(diedImage,9,30,speed,direction,0);
+		if(!isDestroyed()){
+			GameAnimation a = new GameAnimation(image, 8,30,speed,direction,0);
+			a.render(g2d);
+			a.updateAnimation();
+			return;
+		}
+		else{
+			GameAnimation b= new GameAnimation(diedImage,9,30,0,direction,0);
+			b.render(g2d);
+			b.updateAnimation();
+			if(b.getCurrentFrame() == b.getFrameCount())isVisible = false;
+		}
+		
 	}
-
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		if(isDestroyed())return false;
-		return true;
+		return isVisible;
 	}
 
 	@Override
 	public boolean isDestroyed() {
 		// TODO Auto-generated method stub
 		if(hp > 0)return false;
-		
 		Player.addScore(score);
 		Player.addMoney(money);
 		return true;

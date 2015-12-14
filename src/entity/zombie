@@ -1,0 +1,18 @@
+constructer Zombie(String type, Point p, int direction,Field field)
+ 	- เติมค่าลงใน field ต่างๆ ตาม type 
+ 	- จุด p เป็นจุดเริ่มเดินของซอมบี้
+ 	- direction เป็นทิศทางของซอมบี้
+
+ update(){
+  	- เลื่อนตำแหน่งซอมบี้ ตามทิศทาง
+  	
+  turn(Field field){
+  	- เปลี่ยนทิศทางของซอมบี้
+  	- ให้จุดศูนย์กลลางของซอมบี้ตรงกับจุดศูนย์กลางของ terrain ค่อยใช้ turn()
+ 
+ 	Run()
+ 	ให้ zombie เดินไปเรื่อยๆ จนถึงจุดสุดท้าย
+ 	เมื่อถึงจุดสุดท้ายจะเกิดเเกม over
+ 	
+ 	draw(){
+ 		
