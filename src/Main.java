@@ -6,21 +6,23 @@ import javax.swing.JFrame;
 import entity.Field;
 import render.GameScreen;
 import render.GameTitle;
-import render.PlayerStatus;
+import entity.PlayerStatus;
 import render.RenderableHolder;
 
 
 public class Main {
 	public static void main(String[] args){
 		
-		RenderableHolder r = new RenderableHolder(); 
+		RenderableHolder.getInstance();
 		PlayerStatus p = new PlayerStatus();
 		Field f = new Field();
-		GameScreen screenScene = new GameScreen();
+		//GameScreen screenScene = new GameScreen();
+		GameTitle beginScene = new GameTitle();
+		
 		JFrame frame = new JFrame();
 		
 		frame.setLayout(new BorderLayout());
-		frame.add(screenScene,BorderLayout.CENTER);
+		frame.add(beginScene,BorderLayout.CENTER);
 	
 		frame.setVisible(true);
 		frame.pack();

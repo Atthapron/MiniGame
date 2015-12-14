@@ -11,7 +11,7 @@ public class Resource {
 
 	public static BufferedImage getImage(String directory) {
 		try {
-			ClassLoader loader = RenderableHolder.class.getClassLoader();
+			ClassLoader loader = Resource.class.getClassLoader();
 			return ImageIO.read(loader.getResource(directory));
 		} catch (Exception e) {
 			System.out.println("cannot load "+directory);
@@ -21,7 +21,7 @@ public class Resource {
 
 	public static AudioClip getSound(String directory) {
 		try {
-			ClassLoader loader = RenderableHolder.class.getClassLoader();
+			ClassLoader loader = Resource.class.getClassLoader();
 			return Applet.newAudioClip((loader.getResource(directory)).toURI()
 					.toURL());
 		} catch (Exception e) {

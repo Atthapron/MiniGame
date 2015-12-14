@@ -10,7 +10,7 @@ import render.Resource;
 import utility.Direction;
 
 public class Zombie implements IRenderable,Runnable{
-	protected Point position;//position of center of zombie
+	protected Point position;//position of top left of zombie
 	protected int direction;
 	protected int speed;
 	protected Field field;
@@ -57,6 +57,9 @@ public class Zombie implements IRenderable,Runnable{
 	}
 	public void setPosition(int x, int y){
 		position = new Point(x,y);
+	}
+	public void setCenterPosition(int x, int y){
+		position = new Point(x - 32, y - 32);
 	}
 	public boolean isAlive(){
 		return isVisible();
@@ -135,9 +138,9 @@ public class Zombie implements IRenderable,Runnable{
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		if(!isDestroyed())
-			new GameAnimation(image, 8,10,speed,direction);
+			new GameAnimation(image, 8,30,speed,direction,0);
 		else
-			new GameAnimation(diedImage,9,10,speed,direction);
+			new GameAnimation(diedImage,9,30,speed,direction,0);
 	}
 
 	@Override

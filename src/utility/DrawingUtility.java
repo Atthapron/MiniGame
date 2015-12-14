@@ -1,4 +1,4 @@
-package render;
+package utility;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 
 import entity.Field;
 import entity.PlayerStatus;
+import render.GameScreen;
+import render.Resource;
 
 public class DrawingUtility {
 	protected static final Font standardFont = new Font("Tahoma", Font.BOLD, 30);

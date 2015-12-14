@@ -1,5 +1,6 @@
 package input;
 
+import render.Resource;
 
 public class InputUtility {
 	public static int mouseX,mouseY;
@@ -31,6 +32,18 @@ public class InputUtility {
 	public static void updateType(){
 		InputUtility.type = "";
 	}
-	
+	public static boolean clickGo(){
+		if(InputUtility.mouseOnScreen && 
+				mouseX>480 && mouseX<Resource.start_bt.getWidth()+480 &&
+				mouseY>10 && mouseY<Resource.start_bt.getHeight()+10 &&
+				isLeftClickedLastTick
+				){
+			updateInputState();
+			return true;
+			
+		}
+		return false;
+			
+	}
 
 }

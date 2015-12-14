@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
-public class GameAnimation {
+public class GameAnimation{
 	private BufferedImage image = null;
 	private int frameCount, frameDelay;
 	private int currentFrame, frameDelayCount;
@@ -13,12 +13,15 @@ public class GameAnimation {
 	private boolean playing = false;
 	private int speed;
 	private int direction;
-	public GameAnimation(BufferedImage image, int frameCount, int frameDelay,int speed){
+	private double theta;
+	public GameAnimation(BufferedImage image, int frameCount, int frameDelay,int speed, int direction, double theta){
 		this.image = image;
 		this.frameCount = frameCount;
 		this.frameDelay = frameDelay;
 		this.currentFrame = 0;
 		this.speed = speed;
+		this.direction = direction;
+		this.theta = theta;
 		try{
 			this.frameWidth = image.getWidth()/frameCount;
 			this.frameHeight = image.getHeight();
@@ -58,7 +61,7 @@ public class GameAnimation {
 				move();
 			}
 			if(currentFrame == frameCount){
-				stop();
+				currentFrame = 0;
 			}
 		}
 	}
@@ -85,21 +88,29 @@ public class GameAnimation {
 	}
 	public void render(Graphics2D g2) throws RasterFormatException{
 		if(visible == true && image != null){
-			if(direction == 0){
-				g2.drawImage(image.getSubimage(frameWidth*(this.currentFrame), 0, frameWidth, frameHeight),null,x,y);
-			}
+			g2.drawImage(image.getSubimage(currentFrame*frameWidth, 0, frameWidth, frameHeight),x,y,frameWidth,frameHeight,null);
 			if(direction == 1){
-				// fill code draw picture
+				return;
 			}
-			if(direction == 2){
-				// fill code draw picture
+			else if(direction == 2){
+				g2.rotate(Math.PI, x + frameWidth/2, y+frameHeight/2);
 			}
-			if(direction == 3){
-				// fill code draw picture
+			else if(direction == 3){
+				g2.rotate(Math.PI/2 ,x + frameWidth/2,y + frameHeight/2);
+			}
+			else if(direction == 4){
+				g2.rotate(Math.PI*3/2, x + frameWidth/2, y+frameHeight/2);
+			}
+			else {
+				g2.rotate(theta,x + frameWidth/2, y+frameHeight/2);
 			}
 		}
 	}
-
+	public void start(Graphics2D g2){
+		this.updateAnimation();
+		this.render(g2);
+	}
+	
 	
 	
 	public BufferedImage getImage() {
@@ -185,6 +196,8 @@ public class GameAnimation {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+
+	
 	
 	
 	

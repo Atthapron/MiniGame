@@ -22,7 +22,9 @@ public class GameScreen extends JComponent {
 		setPreferredSize(new Dimension(screenWidth, screenHeight));
 		setDoubleBuffered(true); // draw faster
 		setVisible(true);
-
+		Graphics2D g2d = null;
+		
+		
 		// Accept mouse "click" event
 		addMouseListener(new MouseListener() {
 
@@ -40,6 +42,7 @@ public class GameScreen extends JComponent {
 				// TODO Auto-generated method stub
 				if (e.getButton() == 1) {
 					InputUtility.mouseLeftDown();
+					System.out.println("Pressed");
 				}
 			}
 
@@ -58,7 +61,7 @@ public class GameScreen extends JComponent {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
 		});
 		// Accept mouse "move" event
@@ -90,7 +93,7 @@ public class GameScreen extends JComponent {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-
+		
 		ArrayList<IRenderable> entities = (ArrayList<IRenderable>) RenderableHolder
 				.getInstance().getRenderableList();
 		System.out.println(entities.size());

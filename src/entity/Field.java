@@ -4,11 +4,10 @@ import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
 
-import render.DrawingUtility;
-
 import render.IRenderable;
 import render.RenderableHolder;
 import render.Resource;
+import utility.DrawingUtility;
 
 public class Field implements IRenderable {
 	protected boolean isPointOver = false;
@@ -68,16 +67,6 @@ public class Field implements IRenderable {
 	@Override
 	public void draw(Graphics2D g2d) {
 		DrawingUtility.drawField(this, g2d, isPointOver);
-//		for (int x = 0; x < field[0].length; x++) {
-//			for (int y = 0; y < field.length; y++) {
-//				int terrain = getTerrain(x, y);
-//				if (terrain < 0)
-//					terrain = 0;
-//				g2d.drawImage(
-//						Resource.tile.getSubimage(terrain * 64, 0, 64, 64),
-//						null, x * 64, y * 64);
-//			}
-//		}
 
 	}
 

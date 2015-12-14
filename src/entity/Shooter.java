@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.management.monitor.GaugeMonitor;
+
 import input.InputUtility;
+import render.GameAnimation;
 import render.IRenderable;
 import render.Resource;
 import utility.Maths;
@@ -169,11 +172,11 @@ public class Shooter implements IRenderable, Runnable{
 			Zombie nearestZombie = zombiesInRange.get(0);
 			double theta = Math.asin((nearestZombie.position.y - position.y)/Maths.distance(nearestZombie.position, getCenterPoint()));
 			if(nearestZombie.position.x < position.x)theta = Math.PI - theta;
-				g2d.rotate(theta, position.x + 32, position.y + 32);
+			if(shoot())new GameAnimation(shootImage, 3, 30, 0, 0,theta);
+			g2d.rotate(theta, position.x + 32, position.y + 32);
+		
 		}
-		if(shoot()){
-			//g2d.drawImage(img, x, y, width, height, observer)
-		}
+		
 	}
 
 

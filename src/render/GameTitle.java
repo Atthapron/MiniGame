@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class GameTitle extends JPanel {
+public class GameTitle extends JPanel{
 
 	public GameTitle() {
 		setPreferredSize(new Dimension(GameScreen.screenWidth,
@@ -40,7 +40,7 @@ public class GameTitle extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				//fill code
 			}
 		});
 		
@@ -48,8 +48,8 @@ public class GameTitle extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+			
+				//fill code
 			}
 		});
 	}
@@ -58,5 +58,6 @@ public class GameTitle extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(Resource.titleScene, null, -100, 0);
+	
 	}
 }

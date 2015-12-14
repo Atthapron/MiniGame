@@ -2,9 +2,9 @@ package entity;
 
 import java.awt.Graphics2D;
 
-import render.DrawingUtility;
 import render.IRenderable;
 import render.RenderableHolder;
+import utility.DrawingUtility;
 
 public class PlayerStatus implements IRenderable {
 	private boolean isDestroyed=false;
