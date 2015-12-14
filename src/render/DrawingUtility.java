@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import entity.Field;
+import entity.PlayerStatus;
+
 public class DrawingUtility {
 	protected static final Font standardFont = new Font("Tahoma", Font.BOLD, 30);
 	protected static final Font smallFont = new Font("Tahoma", Font.PLAIN, 9);
@@ -78,17 +81,32 @@ public class DrawingUtility {
 
 	}
 
-//	public static void drawField(Graphics2D g2d, int columnField, int rowField,
-//			boolean isPointOver) {
-//		for (int x = 0; x < columnField; x++) {
-//			for (int y = 0; y < rowField; y++) {
-//				int terrain = getTerrain(x, y);
-//				if (terrain < 0)
-//					terrain = 0;
-//				g2d.drawImage(
-//						Resource.tile.getSubimage(terrain * 64, 0, 64, 64),
-//						null, x * 64, y * 64);
-//			}
-//		}
-//	}
+	public static void drawField(Field field, Graphics2D g2d,
+			boolean isPointOver) {
+		for (int x = 0; x < field.getField()[0].length; x++) {
+			for (int y = 0; y < field.getField().length; y++) {
+				int terrain = field.getTerrain(x, y);
+				int temp = terrain;
+				if (terrain < 0)
+					terrain = 0;
+				g2d.drawImage(
+						Resource.tile.getSubimage(terrain * 64, 0, 64, 64),
+						null, x * 64, y * 64);
+				terrain = temp;
+			}
+		}
+	}
+
+	public static void drawBuilding(Field field, Graphics2D g2d) {
+		for (int x = 0; x < field.getField()[0].length; x++) {
+			for (int y = 0; y < field.getField().length; y++) {
+				int terrain = field.getTerrain(x, y);
+				if (terrain == -1)
+					g2d.drawImage(Resource.tree, null, x * 64, y * 64);
+				else if (terrain == -2)
+					g2d.drawImage(Resource.home, null, x * 64, y * 64);
+			}
+		}
+
+	}
 }
