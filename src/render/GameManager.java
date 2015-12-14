@@ -37,8 +37,12 @@ public class GameManager {
 		this.zombieDoctorCouter = 0;
 		this.zombieSpawnThread = new Thread(new Runnable() {
 			public void run() {
-				while(true){
+				try{
+					placeShooterThread.join();
 					spawnZombie();
+				}catch (InterruptedException e ){
+					e.printStackTrace();
+					Thread.interrupted();
 				}
 			}
 		});
@@ -49,10 +53,6 @@ public class GameManager {
 				// TODO Auto-generated method stub
 				try{
 					zombieSpawnThread.join();
-					for(int i=0;i<shooters.size();i++){
-						new Thread(shooters.get(i)).join();
-					}
-					
 					while(true){
 						placeShooter(InputUtility.type);
 						InputUtility.updateType();
@@ -68,6 +68,12 @@ public class GameManager {
 	}
 	public void update(){
 		RenderableHolder.getInstance().add(field);
+		if(InputUtility.startGame){
+			placeShooterThread.start();
+			InputUtility.updateStartGame();
+		}
+		
+		
 		if(isPause){
 			try {
 				zombieSpawnThread.wait();
@@ -89,7 +95,7 @@ public class GameManager {
 		if(InputUtility.clickGo()){
 			try{
 				placeShooterThread.wait();
-				notify();
+				zombieSpawnThread.notify();
 			}catch (InterruptedException e){
 				Thread.interrupted();
 			}
@@ -135,8 +141,10 @@ public class GameManager {
 			if(canPlace(shooter)){
 				if(InputUtility.isLeftClickTriggered() && InputUtility.mouseY>75){
 					shooter.buy(new Point(InputUtility.mouseX, InputUtility.mouseY));
+					field.setShooterPosition(shooter.getCenterPoint().x/64, shooter.getCenterPoint().y/64);
 					RenderableHolder.getInstance().add(shooter);
 					shooters.add(shooter);
+					
 				}	
 			}	
 		}
@@ -148,15 +156,20 @@ public class GameManager {
 	
 
 	public boolean canPlace(Shooter shooter){
-		for(int i=0;i<shooters.size();i++){
-			if(shooters.get(i).getCenterPoint() == shooter.getCenterPoint())
+		for(Shooter soldier : shooters){
+			int x = soldier.getCenterPoint().x/64;
+			int y = soldier.getCenterPoint().y/64;
+			if(field.getTerrain(x, y) != 0){
 				return false;
+			}
+				
 		}
 		return true;
 	}
 	public Thread getPlacedShooterThread(){
 		return placeShooterThread;
 	}
+	
 
 	
 }

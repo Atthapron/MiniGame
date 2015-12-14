@@ -1,0 +1,23 @@
+zombieSpawnThread 
+	- เป็น Thread ที่ให้ซอมบี้เกิดเรื่อยๆ จนครบจตามจำนวน
+	- zombieSpawnThread จะรอจนกว่ส placeShooterThread ทำเสด
+	
+placeShooterThread
+	- เป็น Thread ที่ให้เราสร้าง shooter บนแมพ
+	- ซึ่งเมือเรากด Go placeShooter จะหยุดทำงาน
+	- แล้ว zombieSpawmThread จะทำงานแทน
+	
+
+spawnZombie()
+	- สุ่มปล่อย ซ่อมบบี้ออกมา 
+	- แก้จุดเริ่มต้นของซแมบี้ ที่ตำแหน่ง เริ่มต้น ใน code เขียน   new Point(0,0) 
+
+placeShooter(String type)
+	- type ได้จาก InputUtility และ Utility ได้จาก status bar
+	- เชคว่าวางได้ไหม มีสิ่งกีดขวาง หรือ มี shooter คนอื่นไหม
+	- ถ้าวางได้ ก็วาง Shooter
+	 
+canPlace(Shooter shooter){
+	- เป็นเมทอด เชคว่า สามารถวาง shooter  ได้หรือไม่
+	- คิดว่าจะทำใหม่่ ว่าเมื่อวาง shooter ลงบนแมพ จะเสด ค่า field ตำแหน่งนั้นใหม่
+	- แก้ method นี้

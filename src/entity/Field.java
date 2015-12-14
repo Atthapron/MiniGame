@@ -25,6 +25,7 @@ public class Field implements IRenderable {
 	// direction 2 is down
 	// direction 3 is left
 	// direction 4 is Right
+	// 20 is there are a Shooter
 	
 	//-1 = tree -2=first coordinate of home and -3=area of home.
 	//home use area 2row 3column.
@@ -61,6 +62,9 @@ public class Field implements IRenderable {
 
 	public void setPointOver(boolean isPointOver) {
 		this.isPointOver = isPointOver;
+	}
+	public void setShooterPosition(int x, int y){
+		field[y][x]  =  20;
 	}
 	@Override
 	public int getZ() {
