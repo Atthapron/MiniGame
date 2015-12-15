@@ -157,7 +157,7 @@ public class Shooter implements IRenderable, Runnable{
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
-		return 10;
+		return 100;
 	}
 
 
@@ -167,10 +167,11 @@ public class Shooter implements IRenderable, Runnable{
 		if(this.tryToBuy){
 			//g2d.drawImage(image.getSubimage(64, 0, 64, 64), InputUtility.mouseX - 32, InputUtility.mouseY-32, 64, 64, null);
 			g2d.drawImage(image.getSubimage(0, 0, 64, 64), null, InputUtility.mouseX-32, InputUtility.mouseY-32);
-			System.out.println("tryToBuy" + tryToBuy);
+			
 		}
-			if(this.isBought){
-			g2d.drawImage(image.getSubimage(0, 0, 64, 64), position.x, position.y, 64, 64, null);
+		if(this.isBought){
+			g2d.drawImage(image.getSubimage(0, 0, 64, 64), null, position.x, position.y);
+			System.out.println(isVisible + "isVisible");
 		}
 		
 		if(zombiesInRange.size() > 0){

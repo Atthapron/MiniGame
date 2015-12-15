@@ -137,13 +137,12 @@ public class GameManager {
 			public void run() {
 				// TODO Auto-generated method stub
 				while(true){
-					System.out.println("xx");
+					System.out.println(RenderableHolder.getInstance().getRenderableList().size());
 					if(InputUtility.isLeftClickTriggered() && InputUtility.mouseY>75 && canPlace(InputUtility.mouseX/64, InputUtility.mouseY/64)){
 						RenderableHolder.getInstance().getRenderableList().remove(shooter);
 						shooter.buy(new Point(InputUtility.mouseX, InputUtility.mouseY));
 						RenderableHolder.getInstance().add(shooter);
 						field.setShooterPosition(InputUtility.mouseX/64, InputUtility.mouseY/64);
-						System.out.println("xxxxxxxxxxxxxxxxxxxxxxx");
 						InputUtility.updateInputState();
 						break;
 					}
