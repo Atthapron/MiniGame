@@ -124,42 +124,35 @@ public class GameManager {
 		}
 	}
 	public  void placeShooter(String type){
-		
 		Shooter shooter = new Shooter(type);
 		shooter.setVisible(true);
-
 		shooter.setCenterAt(InputUtility.mouseX, InputUtility.mouseY);
-		System.out.println("type:" + type);
 		shooter.tryToBuy();
-		if(shooter.tryToBuy){
-			placeShooterThread = new Thread( new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					RenderableHolder.getInstance().add(shooter);
-					while(true){
-						if(!shooter.getType().equalsIgnoreCase(InputUtility.type) && InputUtility.type.length() != 0){
-							shooter.setDestroyed(true);
-							shooter.setVisible(false);
-						}
-						
+		RenderableHolder.getInstance().add(shooter);
+		InputUtility.updateInputState();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while(true){
+					System.out.println("xx");
+					if(InputUtility.isLeftClickTriggered() && InputUtility.mouseY>75 && canPlace(InputUtility.mouseX/64, InputUtility.mouseY/64)){
+						RenderableHolder.getInstance().getRenderableList().remove(shooter);
+						shooter.buy(new Point(InputUtility.mouseX, InputUtility.mouseY));
+						RenderableHolder.getInstance().add(shooter);
+						field.setShooterPosition(InputUtility.mouseX/64, InputUtility.mouseY/64);
+						System.out.println("xxxxxxxxxxxxxxxxxxxxxxx");
 						InputUtility.updateInputState();
-						while(true){
-							System.out.println("left : " + InputUtility.isLeftClickTriggered());
-							if(InputUtility.isLeftClickTriggered() && InputUtility.mouseY>75){
-							shooter.buy(new Point(InputUtility.mouseX, InputUtility.mouseY));
-							break;
-						}
-							break;
+						break;
 					}
+					InputUtility.updateInputState();
+					
 				}
-				}
-			});
-			placeShooterThread.start();
-			
-			
-		}
+			}
+		}).start();
+	}
 		
 		/*if(shooter.tryToBuy){
 			System.out.println("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
@@ -174,21 +167,19 @@ public class GameManager {
 				}	
 			}	
 		}*/
-	}
+
 	public ArrayList<Shooter> getShooterS(){
 		return shooters;
 	}
 	
 
-	public boolean canPlace(Shooter shooter){
-		for(Shooter soldier : shooters){
-			int x = soldier.getCenterPoint().x/64;
-			int y = soldier.getCenterPoint().y/64;
+	public boolean canPlace(int x, int y){
+		
 			if(field.getTerrain(x, y) != 0){
+				
 				return false;
 			}
 				
-		}
 		return true;
 	}
 	public void startGameManager(){

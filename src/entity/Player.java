@@ -6,6 +6,7 @@ public class Player {
 	static{
 		Player.score = 0;
 		Player.money = 1200;
+		if(money<0)Player.money = 0;
 	}
 	
 	public static void addMoney(int getMoney){

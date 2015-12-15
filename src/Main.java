@@ -43,6 +43,7 @@ public class Main {
 						System.out.println(InputUtility.startGame+" e");	
 						//gameManager.startGameManager();
 						gameManager.update();
+					
 					}
 					p1.repaint();
 				}
