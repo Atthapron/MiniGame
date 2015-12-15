@@ -1,5 +1,6 @@
 package input;
 
+import entity.PlayerStatus;
 import render.Resource;
 
 public class InputUtility {
@@ -9,6 +10,7 @@ public class InputUtility {
 	private static boolean isLeftClickedLastTick = false;
 	public static String type = ""; 
 	public static boolean startGame = false;
+	
 	
 	public static void mouseLeftDown(){
 		isLeftDown = true;
@@ -38,18 +40,36 @@ public class InputUtility {
 				mouseY>10 && mouseY<Resource.start_bt.getHeight()+10 &&
 				isLeftClickedLastTick
 				){
-			updateInputState();
+			System.out.print(true);
 			return true;
 			
 		}
+		System.out.print(false);
 		return false;
 			
 	}
+	public static void setShooterClicked(){
+		if(InputUtility.mouseOnScreen && 
+				mouseX>PlayerStatus.xHandGunIcon && mouseX<PlayerStatus.xHandGunIcon+64 &&
+				mouseY>PlayerStatus.yHandGunIcon && mouseY<PlayerStatus.yHandGunIcon+64 && 
+				isLeftClickedLastTick)
+					type = "handgun";
+		if(InputUtility.mouseOnScreen && 
+				mouseX>PlayerStatus.xRifleIcon && mouseX<PlayerStatus.xRifleIcon+64 &&
+				mouseY>PlayerStatus.yRifleIcon && mouseY<PlayerStatus.yRifleIcon+64 && 
+				isLeftClickedLastTick)
+					type = "rifle";
+		if(InputUtility.mouseOnScreen && 
+				mouseX>PlayerStatus.xShotGunIcon && mouseX<PlayerStatus.xShotGunIcon+64 &&
+				mouseY>PlayerStatus.yShotGunIcon  && mouseY<PlayerStatus.yShotGunIcon+64 && 
+				isLeftClickedLastTick)
+					type = "shotgun";
+		System.out.print(type);
+	}
+	
+	
 	public static void updateStartGame(){
 		startGame = false;
 	}
-	public static boolean getStartGame(){
-		return startGame;
-	}
-
+	
 }
