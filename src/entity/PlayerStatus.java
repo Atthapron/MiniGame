@@ -144,7 +144,7 @@ public class PlayerStatus implements IRenderable {
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		DrawingUtility.drawStatusBar(g2d, remainingEnemyB, remainingEnemyD,
-				maxEnemyB, maxEnemyD, coin, isPointOverHandGun(),
+				maxEnemyB, maxEnemyD, Player.getMoney(), isPointOverHandGun(),
 				isPointOverShotGun(), isPointOverRifle(),isPointOverStart());
 	}
 

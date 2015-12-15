@@ -10,6 +10,7 @@ public class InputUtility {
 	private static boolean isLeftClickedLastTick = false;
 	public static String type = ""; 
 	public static boolean startGame = false;
+	public static boolean CLICK = false;
 	
 	
 	public static void mouseLeftDown(){

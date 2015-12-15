@@ -28,7 +28,6 @@ public class GameManager {
 	private boolean isPause;
 	
 	
-	
 	public GameManager(){
 		this.field = new Field();
 		this.zombies = new ArrayList<Zombie>();
@@ -49,9 +48,17 @@ public class GameManager {
 		});
 		
 	}
+	@SuppressWarnings("deprecation")
 	public void update(){
 		
-		if(InputUtility.startGame){
+		if(InputUtility.type.length() != 0){
+			placeShooterThread.interrupt();
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			placeShooter(InputUtility.type);
+			System.out.println("update");
+			InputUtility.updateType();
+		}
+		/*if(InputUtility.startGame){
 			placeShooterThread.start();
 			InputUtility.updateStartGame();
 		}
@@ -80,7 +87,7 @@ public class GameManager {
 			}catch (InterruptedException e){
 				Thread.interrupted();
 			}
-		}
+		}*/
 		
 	}
 	
@@ -116,21 +123,57 @@ public class GameManager {
 			
 		}
 	}
-	public synchronized  void placeShooter(String type){
+	public  void placeShooter(String type){
 		
 		Shooter shooter = new Shooter(type);
+		shooter.setVisible(true);
+
+		shooter.setCenterAt(InputUtility.mouseX, InputUtility.mouseY);
+		System.out.println("type:" + type);
+		shooter.tryToBuy();
 		if(shooter.tryToBuy){
+			placeShooterThread = new Thread( new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					RenderableHolder.getInstance().add(shooter);
+					while(true){
+						if(!shooter.getType().equalsIgnoreCase(InputUtility.type) && InputUtility.type.length() != 0){
+							shooter.setDestroyed(true);
+							shooter.setVisible(false);
+						}
+						
+						InputUtility.updateInputState();
+						while(true){
+							System.out.println("left : " + InputUtility.isLeftClickTriggered());
+							if(InputUtility.isLeftClickTriggered() && InputUtility.mouseY>75){
+							shooter.buy(new Point(InputUtility.mouseX, InputUtility.mouseY));
+							break;
+						}
+							break;
+					}
+				}
+				}
+			});
+			placeShooterThread.start();
+			
+			
+		}
+		
+		/*if(shooter.tryToBuy){
+			System.out.println("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 			if(canPlace(shooter)){
-				if(InputUtility.isLeftClickTriggered() && InputUtility.mouseY>75){
+				if(InputUtility.isLeftClickTriggered()){
 					shooter.buy(new Point(InputUtility.mouseX, InputUtility.mouseY));
+					System.out.println(shooter.getCenterPoint().x);
 					field.setShooterPosition(shooter.getCenterPoint().x/64, shooter.getCenterPoint().y/64);
 					RenderableHolder.getInstance().add(shooter);
 					shooters.add(shooter);
-					
+					InputUtility.updateType();
 				}	
 			}	
-		}
-			
+		}*/
 	}
 	public ArrayList<Shooter> getShooterS(){
 		return shooters;

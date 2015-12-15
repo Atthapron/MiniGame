@@ -30,7 +30,7 @@ public class Main {
 		GameTitle beginScene = new GameTitle();
 		GameWindow gameWindow = new GameWindow(beginScene);
 		GameManager gameManager  = new GameManager();
-		
+		f.setShooterPosition(0,0);
 		
 		Thread a = new Thread(new Runnable() {
 			
@@ -41,7 +41,7 @@ public class Main {
 					if(InputUtility.startGame){
 						gameWindow.switchScene(p1);
 						System.out.println(InputUtility.startGame+" e");	
-						gameManager.startGameManager();
+						//gameManager.startGameManager();
 						gameManager.update();
 					}
 					p1.repaint();

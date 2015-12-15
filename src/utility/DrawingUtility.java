@@ -93,7 +93,7 @@ public class DrawingUtility {
 			for (int y = 0; y < field.getField().length; y++) {
 				int terrain = field.getTerrain(x, y);
 				int temp = terrain;
-				if (terrain < 0)
+				if (terrain < 0 || terrain == 20)
 					terrain = 0;
 				g2d.drawImage(
 						Resource.tile.getSubimage(terrain * 64, 0, 64, 64),

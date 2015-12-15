@@ -13,7 +13,7 @@ public class Field implements IRenderable {
 	protected boolean isPointOver = false;
 	protected boolean isDestroyed = false;
 	protected Building building;
-	
+
 	public Field() {
 		super();
 		building = new Building(this);
@@ -30,7 +30,7 @@ public class Field implements IRenderable {
 	//-1 = tree -2=first coordinate of home and -3=area of home.
 	//home use area 2row 3column.
 
-	private static int[][] field = {
+	private  int[][] field = {
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 	{ 0, 0, 0, 0, 0, 0, 3, 1, 1, 5, 0, 0, 0, 0, 0, 0 },

@@ -28,6 +28,11 @@ public class RenderableHolder {
 				return -1;
 			}
 		});
+		for(IRenderable entityq : entities){
+			if(entityq.isDestroyed()){
+				entities.remove(entityq);
+			}
+		}
 	}
 
 	public List<IRenderable> getRenderableList() {

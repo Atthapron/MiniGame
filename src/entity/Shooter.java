@@ -25,7 +25,9 @@ public class Shooter implements IRenderable, Runnable{
 	private int shootDelayCount;
 	
 	public boolean tryToBuy;
+	public boolean isVisible;
 	private boolean isBought;
+	public boolean isDestroyed;
 
 	
 	private BufferedImage image;
@@ -36,6 +38,7 @@ public class Shooter implements IRenderable, Runnable{
 	public Shooter(String type){
 		this.shootDelayCount = 0;
 		this.type = type;
+		zombiesInRange = new ArrayList<Zombie>();
 		if(type.equalsIgnoreCase("handgun")){
 			this.cost = 5;
 			this.attack = 1;
@@ -62,7 +65,7 @@ public class Shooter implements IRenderable, Runnable{
 			this.image = Resource.shotGunIdleSprite;
 			this.shootImage = Resource.shotGunShootSprite;
 		}
-			
+		System.out.println(image.getWidth());
 	}
 	
 	
@@ -105,7 +108,6 @@ public class Shooter implements IRenderable, Runnable{
 		if(ready()){
 			zombiesInRange.get(0).takeDamage(attack);
 			shootDelayCount = 0;
-			
 			Resource.shootSound.play();
 			
 			return true;
@@ -136,8 +138,7 @@ public class Shooter implements IRenderable, Runnable{
 	
 	
 	public void setCenterAt(int x, int y){
-		position.x = x - image.getWidth()/2;
-		position.y = y - image.getHeight()/2;
+		position = new Point(x-32, y-32);
 	}
 	public void setTopLeftAt(int x, int y){
 		position.x = x;
@@ -163,9 +164,12 @@ public class Shooter implements IRenderable, Runnable{
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		if(this.tryToBuy)
-			g2d.drawImage(image.getSubimage(Maths.random(0, 20)*64, 0, 64, 64), InputUtility.mouseX - 32, InputUtility.mouseY-32, 64, 64, null);
-		if(this.isBought){
+		if(this.tryToBuy){
+			//g2d.drawImage(image.getSubimage(64, 0, 64, 64), InputUtility.mouseX - 32, InputUtility.mouseY-32, 64, 64, null);
+			g2d.drawImage(image.getSubimage(0, 0, 64, 64), null, InputUtility.mouseX-32, InputUtility.mouseY-32);
+			System.out.println("tryToBuy" + tryToBuy);
+		}
+			if(this.isBought){
 			g2d.drawImage(image.getSubimage(0, 0, 64, 64), position.x, position.y, 64, 64, null);
 		}
 		
@@ -184,16 +188,15 @@ public class Shooter implements IRenderable, Runnable{
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		if(this.isBought)return true;
-		return false;
+		return isVisible;
+	
 	}
 
 
 	@Override
 	public boolean isDestroyed() {
 		// TODO Auto-generated method stub
-		if(this.isBought)return false;
-		return true;
+		return isDestroyed;
 	}
 
 
@@ -211,7 +214,41 @@ public class Shooter implements IRenderable, Runnable{
 			e.printStackTrace();
 		}
 	}
+	public void setVisible(boolean visible){
+		isVisible = visible;
+	}
 	
+	public void setType(String type){
+		this.type = type;
+		if(type.equalsIgnoreCase("handgun")){
+			this.cost = 5;
+			this.attack = 1;
+			this.range = 5;
+			this.shootDelay = 5;
+			this.image = Resource.handGunIdleSprite;
+			this.shootImage = Resource.handGunShootSprite;
+			
+		}
+		if(type.equalsIgnoreCase("rifle")){
+			this.cost = 10;
+			this.attack = 6;
+			this.range = 8;
+			this.shootDelay = 1;
+			this.image = Resource.rifleIdleSprite;
+			this.shootImage = Resource.rifleShootSprite;
+			
+		}
+		if(type.equalsIgnoreCase("shotgun")){
+			this.cost = 15;
+			this.attack = 8;
+			this.range =  3;
+			this.shootDelay = 3;
+			this.image = Resource.shotGunIdleSprite;
+			this.shootImage = Resource.shotGunShootSprite;
+		}
+	}
+	public void setDestroyed(boolean destroyed){
+		this.isDestroyed = destroyed;
+	}
 
-	
 }

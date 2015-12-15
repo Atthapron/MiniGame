@@ -5,7 +5,7 @@ public class Player {
 	private static int money;
 	static{
 		Player.score = 0;
-		Player.money = 0;
+		Player.money = 1200;
 	}
 	
 	public static void addMoney(int getMoney){
