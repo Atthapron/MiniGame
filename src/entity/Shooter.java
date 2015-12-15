@@ -169,7 +169,6 @@ public class Shooter implements IRenderable, Runnable{
 			g2d.drawImage(image.getSubimage(0, 0, 64, 64), position.x, position.y, 64, 64, null);
 		}
 		
-		
 		if(zombiesInRange.size() > 0){
 			Zombie nearestZombie = zombiesInRange.get(0);
 			double theta = Math.asin((nearestZombie.position.y - position.y)/Maths.distance(nearestZombie.position, getCenterPoint()));

@@ -38,10 +38,11 @@ public class Main {
 			public void run() {
 				// TODO Auto-generated method stub
 				while(true){
-					if(InputUtility.getStartGame()){
+					if(InputUtility.startGame){
 						gameWindow.switchScene(p1);
 						System.out.println(InputUtility.startGame+" e");	
-						gameManager.getPlacedShooterThread().start();
+						gameManager.startGameManager();
+						gameManager.update();
 					}
 					p1.repaint();
 				}

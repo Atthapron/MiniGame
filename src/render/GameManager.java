@@ -28,6 +28,7 @@ public class GameManager {
 	private boolean isPause;
 	
 	
+	
 	public GameManager(){
 		this.field = new Field();
 		this.zombies = new ArrayList<Zombie>();
@@ -37,37 +38,19 @@ public class GameManager {
 		this.zombieDoctorCouter = 0;
 		this.zombieSpawnThread = new Thread(new Runnable() {
 			public void run() {
-				try{
-					placeShooterThread.join();
 					spawnZombie();
-				}catch (InterruptedException e ){
-					e.printStackTrace();
-					Thread.interrupted();
-				}
 			}
 		});
 		this.placeShooterThread = new Thread(new Runnable() {
-			
-			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				try{
-					zombieSpawnThread.join();
-					while(true){
-						placeShooter(InputUtility.type);
-						InputUtility.updateType();
-					}
-				}catch (InterruptedException e){
-						e.printStackTrace();
-						Thread.interrupted();
-					}
-			}
-			
+					placeShooter(InputUtility.type);
+					InputUtility.updateType();				
+			}			
 		});
-	
+		
 	}
 	public void update(){
-		RenderableHolder.getInstance().add(field);
+		
 		if(InputUtility.startGame){
 			placeShooterThread.start();
 			InputUtility.updateStartGame();
@@ -79,8 +62,6 @@ public class GameManager {
 				zombieSpawnThread.wait();
 				for(Shooter s : shooters)s.wait();
 				for(Zombie z : zombies)z.wait();
-				
-				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				Thread.interrupted();
@@ -100,6 +81,7 @@ public class GameManager {
 				Thread.interrupted();
 			}
 		}
+		
 	}
 	
 
@@ -166,8 +148,8 @@ public class GameManager {
 		}
 		return true;
 	}
-	public Thread getPlacedShooterThread(){
-		return placeShooterThread;
+	public void startGameManager(){
+		placeShooterThread.start();
 	}
 	
 

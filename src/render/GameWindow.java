@@ -26,7 +26,7 @@ public class GameWindow extends JFrame {
 		validate();
 		pack();
 		currentScene.requestFocus();
-		InputUtility.updateStartGame();
+		//InputUtility.updateStartGame();
 		
 	}
 

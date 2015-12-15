@@ -61,7 +61,7 @@ public class GameScreen extends JComponent {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				InputUtility.setShooterClicked();
 			}
 		});
 		// Accept mouse "move" event
