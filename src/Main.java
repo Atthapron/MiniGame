@@ -33,7 +33,6 @@ public class Main {
 		f.setShooterPosition(0,0);
 		
 		Thread a = new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub

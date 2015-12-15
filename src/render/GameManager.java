@@ -154,7 +154,6 @@ public class GameManager {
 	}
 		
 		/*if(shooter.tryToBuy){
-			System.out.println("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 			if(canPlace(shooter)){
 				if(InputUtility.isLeftClickTriggered()){
 					shooter.buy(new Point(InputUtility.mouseX, InputUtility.mouseY));

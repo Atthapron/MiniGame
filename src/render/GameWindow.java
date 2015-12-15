@@ -7,6 +7,7 @@ import input.InputUtility;
 
 public class GameWindow extends JFrame {
 	private JPanel currentScene;
+	private boolean GameOver;
 	
 	public GameWindow(JPanel scene) {
 		super("Zombie Shot");

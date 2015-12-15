@@ -130,7 +130,7 @@ public class Shooter implements IRenderable, Runnable{
 	public void buy(Point p){
 		this.tryToBuy = false;
 		Player.pay(cost);
-		setCenterAt((p.x/64+1)*64+32, (p.y-75/64+1)*64+32);
+		setCenterAt((p.x/64)*64+32, ((p.y-75)/64+1)*64+32);
 		this.isBought = true;
 		Resource.coinSound.play();
 	}
