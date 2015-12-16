@@ -36,6 +36,11 @@ public class RenderableHolder {
 		}
 		}
 	}
+	
+	public void remove(IRenderable entity)
+	{
+		entities.remove(entity);
+	}
 
 	public List<IRenderable> getRenderableList() {
 		return entities;

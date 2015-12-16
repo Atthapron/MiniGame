@@ -3,6 +3,7 @@ package render;
 import java.awt.Point;
 import java.sql.SQLInvalidAuthorizationSpecException;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.sun.org.apache.bcel.internal.generic.CPInstruction;
 import com.sun.swing.internal.plaf.synth.resources.synth;
@@ -16,9 +17,9 @@ import utility.Direction;
 public class GameManager {
 	
 	private Field field;
-	private ArrayList<Zombie> zombies;
-	private ArrayList<Shooter> shooters;
-	private static final int SPAWN_DEALY = 500;
+	//public CopyOnWriteArrayList<Zombie> zombies;
+	//private CopyOnWriteArrayList<Shooter> shooters;
+	private static final int SPAWN_DEALY = 100;
 	private int spawnDelayCounter;
 	private int zombieBoyCounter;
 	private int zombieDoctorCouter;
@@ -31,8 +32,8 @@ public class GameManager {
 	
 	public GameManager(){
 		this.field = new Field();
-		this.zombies = new ArrayList<Zombie>();
-		this.shooters = new ArrayList<Shooter>();
+		//this.zombies = new CopyOnWriteArrayList<Zombie>();
+		//this.shooters = new CopyOnWriteArrayList<Shooter>();
 		this.spawnDelayCounter = 0;
 		this.zombieBoyCounter = 0;
 		this.zombieDoctorCouter = 0;
@@ -58,16 +59,44 @@ public class GameManager {
 			System.out.println("update");
 			InputUtility.updateType();
 		}
-		System.out.println("go " + InputUtility.zombieGo);
+		//System.out.println("go " + InputUtility.zombieGo);
 		if(InputUtility.zombieGo){
-			for(Shooter s : shooters)new Thread(s).start();
 			spawnZombie();
 		}
-		for(Shooter s : shooters){
-			for(Zombie z : zombies){
-				s.addTarget(z);
+		for (IRenderable s : RenderableHolder.getInstance().getRenderableList())
+		{
+			if (s instanceof Shooter)
+			{
+				((Shooter)s).update();
+				for (IRenderable t : RenderableHolder.getInstance().getRenderableList())
+				{
+					if (t instanceof Zombie)
+					{
+						((Shooter)s).addTarget((Zombie)t);
+					}
+				}
+			}
+			if (s instanceof Zombie)
+			{
+				((Zombie) s).update();
+			}
+			if (s.isDestroyed())
+			{
+				RenderableHolder.getInstance().remove(s);
 			}
 		}
+		/*for (Zombie zombie : zombies)
+		{
+			System.out.println(zombie.hp);
+			if (zombie.isDestroyed()) zombies.remove(zombie);
+		}
+		for (Shooter shooter : shooters)
+		{
+			for (Zombie zombie : zombies)
+			{
+				shooter.addTarget(zombie);
+			}
+		}*/
 		/*if(InputUtility.startGame){
 			placeShooterThread.start();
 			InputUtility.updateStartGame();
@@ -112,11 +141,11 @@ public class GameManager {
 			else type = "doctorZombie";
 			//ห้ามมีเกินกี่ตัว
 			System.out.println(zombieBoyCounter + "zombieCounter");
-			if(zombieBoyCounter>1){
+			if(zombieBoyCounter>100){
 				type = "doctorZombie";
 				return;
 			}
-			if(zombieDoctorCouter>1){
+			if(zombieDoctorCouter>100){
 				type = "boyzombie";
 				return;
 			}
@@ -125,10 +154,8 @@ public class GameManager {
 				return;
 			}
 			Zombie zombie = new Zombie(type, new Point(Zombie.startX, Zombie.startY), Direction.RIGHT, field);
-			Thread a = new Thread(zombie);
-			a.start();
 			RenderableHolder.getInstance().add(zombie);
-			zombies.add(zombie);
+			//zombies.add(zombie);
 			if(type.equalsIgnoreCase("boyZombie"))zombieBoyCounter++;
 			if(type.equalsIgnoreCase("doctorZombie"))zombieDoctorCouter++;
 			System.out.println(zombieBoyCounter);
@@ -150,6 +177,7 @@ public class GameManager {
 		shooter.setVisible(true);
 		shooter.setCenterAt(InputUtility.mouseX, InputUtility.mouseY);
 		shooter.tryToBuy();
+		//shooters.add(shooter);
 		RenderableHolder.getInstance().add(shooter);
 		InputUtility.updateInputState();
 		
@@ -188,9 +216,9 @@ public class GameManager {
 			}	
 		}*/
 
-	public ArrayList<Shooter> getShooterS(){
+	/*public CopyOnWriteArrayList<Shooter> getShooterS(){
 		return shooters;
-	}
+	}*/
 	
 
 	public boolean canPlace(int x, int y){

@@ -63,7 +63,7 @@ public class InputUtility {
 				mouseY>PlayerStatus.yShotGunIcon  && mouseY<PlayerStatus.yShotGunIcon+64 && 
 				isLeftClickedLastTick)
 					type = "shotgun";
-		System.out.print(type);
+		//System.out.print(type);
 	}
 	
 

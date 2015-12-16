@@ -13,14 +13,14 @@ import render.IRenderable;
 import render.Resource;
 import utility.Direction;
 
-public class Zombie implements IRenderable,Runnable{
+public class Zombie implements IRenderable{
 	protected Point position;//position of top left of zombie
 	protected int direction;
 	protected int speed;
 	protected Field field;
 	protected int spawnZombie;
 	
-	protected int hp;
+	public int hp;
 	protected int score;
 	protected int money;
 	protected boolean isVisible;
@@ -39,14 +39,14 @@ public class Zombie implements IRenderable,Runnable{
 		this.isVisible = true;
 		
 		if(type.equalsIgnoreCase("boyZombie")){
-			this.hp = 10;
+			this.hp = 20;
 			this.score = 2;
 			this.money = 5;
 			this.speed = 1;
 			this.image = Resource.zombieBoyWalkSprite;
 		}
 		if(type.equalsIgnoreCase("doctorZombie")){
-			this.hp = 15;
+			this.hp = 30;
 			this.score = 5;
 			this.money = 10;
 			this.speed = 1;
@@ -112,7 +112,7 @@ public class Zombie implements IRenderable,Runnable{
 			InputUtility.isGameOver = true;
 		}
 		
-		System.out.println(x/64 + " " + (y)/64 + " " + terrain);
+		//System.out.println(x/64 + " " + (y)/64 + " " + terrain);
 		if(terrain == 1 || terrain == 2){
 			return;
 		}
@@ -141,7 +141,6 @@ public class Zombie implements IRenderable,Runnable{
 	
 	
 	
-	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 			synchronized (this) {
@@ -149,7 +148,7 @@ public class Zombie implements IRenderable,Runnable{
 				while(isAlive()){	
 				
 				turn(field);
-				System.out.println("Thread");
+				//System.out.println("Thread");
 			}
 		}
 	}

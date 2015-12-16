@@ -12,11 +12,12 @@ import javax.management.monitor.GaugeMonitor;
 
 import input.InputUtility;
 import render.GameAnimation;
+import render.GameManager;
 import render.IRenderable;
 import render.Resource;
 import utility.Maths;
 
-public class Shooter implements IRenderable, Runnable{
+public class Shooter implements IRenderable{
 	private String type;
 	private Point position;// top left
 	private int cost;
@@ -42,27 +43,27 @@ public class Shooter implements IRenderable, Runnable{
 		zombiesInRange = new ArrayList<Zombie>();
 		if(type.equalsIgnoreCase("handgun")){
 			this.cost = 5;
-			this.attack = 1;
-			this.range = 300;
-			this.shootDelay = 5;
+			this.attack = 2;
+			this.range = 500;
+			this.shootDelay = 50;
 			this.image = Resource.handGunIdleSprite;
 			this.shootImage = Resource.handGunShootSprite;
 			
 		}
 		if(type.equalsIgnoreCase("rifle")){
 			this.cost = 10;
-			this.attack = 6;
-			this.range = 400;
-			this.shootDelay = 1;
+			this.attack = 10;
+			this.range = 700;
+			this.shootDelay = 10;
 			this.image = Resource.rifleIdleSprite;
 			this.shootImage = Resource.rifleShootSprite;
 			
 		}
 		if(type.equalsIgnoreCase("shotgun")){
 			this.cost = 15;
-			this.attack = 8;
-			this.range =  200;
-			this.shootDelay = 3;
+			this.attack = 15;
+			this.range =  300;
+			this.shootDelay = 30;
 			this.image = Resource.shotGunIdleSprite;
 			this.shootImage = Resource.shotGunShootSprite;
 		}
@@ -74,17 +75,18 @@ public class Shooter implements IRenderable, Runnable{
 		return this.image;
 	}
 	public boolean ready(){
-		if(shootDelay < shootDelayCount){
-			shootDelay++;
+		if(shootDelayCount < shootDelay){
+			shootDelayCount++;
 			return false;
 		}
+		shootDelayCount = 0;
 		return true;
 		
 	}
 	public void addTarget(Zombie zombie){
-		
 		if(Maths.distance(zombie.position, this.getCenterPoint()) <= range){
-			zombiesInRange.add(zombie);		
+			zombiesInRange.add(zombie);	
+			
 		}
 		for(Zombie zombies : zombiesInRange){
 			if(!zombies.isAlive()){
@@ -108,7 +110,6 @@ public class Shooter implements IRenderable, Runnable{
 	public boolean shoot(){
 		if(ready()){
 			zombiesInRange.get(0).takeDamage(attack);
-			shootDelay = 0;
 			Resource.shootSound.play();
 			
 			return true;
@@ -182,7 +183,7 @@ public class Shooter implements IRenderable, Runnable{
 			Zombie nearestZombie = zombiesInRange.get(0);
 			double theta = Math.asin((nearestZombie.position.y - position.y)/Maths.distance(nearestZombie.position, getCenterPoint()));
 			if(nearestZombie.position.x < position.x)theta = Math.PI - theta;
-			if(shoot()){
+			/*if(shoot()){
 				//new GameAnimation(shootImage, 3, 30, 0, 0,theta);
 				AffineTransform at = new AffineTransform();
 				at.scale(1, 1);
@@ -190,7 +191,7 @@ public class Shooter implements IRenderable, Runnable{
 				at.translate(position.x + 32, position.y + 32);
 				g2d.drawImage(shootImage.getSubimage(0, 0,64, 64), at, null);
 				//g2d.rotate(theta, position.x + 32, position.y + 32);
-			}
+			}*/
 		}
 		
 	}
@@ -211,18 +212,12 @@ public class Shooter implements IRenderable, Runnable{
 	}
 
 
-	@Override
-	public void run() {
+	public void update() {
 		// TODO Auto-generated method stub
-		
-			while(isBought){
-				if(zombiesInRange.size() > 0){
-					System.out.print("xxsatweygexxxxxxxxxxxxxxxxxxxxxxx");
-					if(ready())shoot();
-				
-				}
-			}
-			
+		if(zombiesInRange.size() > 0){
+			shoot();
+			zombiesInRange.clear();
+		}
 	}
 	public void setVisible(boolean visible){
 		isVisible = visible;
@@ -233,8 +228,8 @@ public class Shooter implements IRenderable, Runnable{
 		if(type.equalsIgnoreCase("handgun")){
 			this.cost = 5;
 			this.attack = 1;
-			this.range = 5;
-			this.shootDelay = 5;
+			this.range = 1000;
+			this.shootDelay = 50;
 			this.image = Resource.handGunIdleSprite;
 			this.shootImage = Resource.handGunShootSprite;
 			
@@ -242,8 +237,8 @@ public class Shooter implements IRenderable, Runnable{
 		if(type.equalsIgnoreCase("rifle")){
 			this.cost = 10;
 			this.attack = 6;
-			this.range = 8;
-			this.shootDelay = 1;
+			this.range = 2000;
+			this.shootDelay = 10;
 			this.image = Resource.rifleIdleSprite;
 			this.shootImage = Resource.rifleShootSprite;
 			
@@ -251,8 +246,8 @@ public class Shooter implements IRenderable, Runnable{
 		if(type.equalsIgnoreCase("shotgun")){
 			this.cost = 15;
 			this.attack = 8;
-			this.range =  3;
-			this.shootDelay = 3;
+			this.range =  3000;
+			this.shootDelay = 30;
 			this.image = Resource.shotGunIdleSprite;
 			this.shootImage = Resource.shotGunShootSprite;
 		}
