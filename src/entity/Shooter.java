@@ -130,7 +130,7 @@ public class Shooter implements IRenderable, Runnable{
 	public void buy(Point p){
 		this.tryToBuy = false;
 		Player.pay(cost);
-		setCenterAt((p.x/64)*64+32, ((p.y-75)/64+1)*64+32);
+		setCenterAt((p.x/64)*64+32, ((p.y-70)/64+1)*64+32);
 		this.isBought = true;
 		Resource.coinSound.play();
 	}
@@ -171,7 +171,6 @@ public class Shooter implements IRenderable, Runnable{
 		}
 		if(this.isBought){
 			g2d.drawImage(image.getSubimage(0, 0, 64, 64), null, position.x, position.y);
-			System.out.println(isVisible + "isVisible");
 		}
 		
 		if(zombiesInRange.size() > 0){

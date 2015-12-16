@@ -2,8 +2,12 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import javax.crypto.CipherInputStream;
+
+import input.InputUtility;
 import render.GameAnimation;
 import render.IRenderable;
 import render.Resource;
@@ -24,6 +28,8 @@ public class Zombie implements IRenderable,Runnable{
 	protected BufferedImage image;
 	protected BufferedImage diedImage;
 	
+	public static int startX = 0;// must be -32
+	public static int startY = 576 - 64;
 	
 	public Zombie(String type, Point p, int direction, Field field){
 		this.position = p;
@@ -36,14 +42,14 @@ public class Zombie implements IRenderable,Runnable{
 			this.hp = 10;
 			this.score = 2;
 			this.money = 5;
-			this.speed = 5;
+			this.speed = 1;
 			this.image = Resource.zombieBoyWalkSprite;
 		}
 		if(type.equalsIgnoreCase("doctorZombie")){
 			this.hp = 15;
 			this.score = 5;
 			this.money = 10;
-			this.speed = 4;
+			this.speed = 1;
 			this.image = Resource.zombieDoctorWalkSprite;
 		}
 	}
@@ -66,25 +72,46 @@ public class Zombie implements IRenderable,Runnable{
 	public boolean isAlive(){
 		return isVisible();
 	}
+	public BufferedImage getImage(){
+		return image;
+	}
+	
 	public void update(){
-		
 		if(direction == Direction.UP){
-			this.position.y = (int) (position.getY() - speed);
+			this.position.y = (int) (position.y - speed);
 		}
 		if(direction == Direction.DOWN){
-			this.position.y = (int) (position.getY() + speed);
+			this.position.y = (int) (position.y + speed);
 		}
 		if(direction == Direction.LEFT){
-			this.position.x = (int) (position.getY() - speed);
+			this.position.x = (int) (position.x - speed);
 		}
 		if(direction == Direction.RIGHT){
-			this.position.x = (int) (position.getY() - speed);
+			this.position.x = (int) (position.x + speed);
 		}
 	}
 	public void turn(Field field){
-		int x = position.x;
-		int y = position.y;
-		int terrain = field.getTerrain(x, y);
+		int x = position.x+32;
+		int y = position.y+32;
+		int terrain = 0;
+		if(direction == 1){
+			terrain = field.getTerrain((x)/64 , (y+32)/64);
+			
+		}
+		if(direction == 2){
+			terrain = field.getTerrain(((x)/64) , (y-32)/64);
+		}
+		if(direction == 3){
+			terrain = field.getTerrain(((x+32)/64), (y)/64);
+		}
+		if(direction == 4){
+			terrain = field.getTerrain(((x-32)/64), (y)/64);
+		}
+		if(terrain == -3){
+			InputUtility.isGameOver = true;
+		}
+		
+		System.out.println(x/64 + " " + (y)/64 + " " + terrain);
 		if(terrain == 1 || terrain == 2){
 			return;
 		}
@@ -116,41 +143,64 @@ public class Zombie implements IRenderable,Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		try{
-			while(isAlive()){
-				Thread.sleep(50);
-				synchronized (this) {
-					update();
-					turn(field);
-				}
+			synchronized (this) {
+				int count = 0;
+				while(isAlive()){	
+				
+				turn(field);
+				System.out.println("Thread");
 			}
-		}catch (Exception e){
-			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
-		return 10;
+		return 100;
 	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
+		AffineTransform at = new AffineTransform();
+		double angle = 0;
+		update();
+		turn(field);
+		if(direction == 1){
+			at.translate(position.x, position.y);
+		}
+		if(direction == 2){
+			angle = Math.PI;
+			at.translate(position.x+64, position.y+64);
+		}
+		if(direction == 3){
+			angle = Math.PI*3/2;
+			at.translate(position.x, position.y);
+		}
+		if(direction == 4){
+			angle = Math.PI/2;
+			at.translate(position.x+64, position.y);
+		}
+		
+		
+		at.rotate(angle);
+		at.scale(1, 1);
+		g2d.drawImage(image.getSubimage(0, 0, 64, 64),at,null);
+		
+		
+		/*GameAnimation a = new GameAnimation(image, 8,1000,1,direction,0);
+		GameAnimation b= new GameAnimation(diedImage,9,1000,0,direction,0);
+		a.setTopLeftAt(position.x , position.y);
 		if(!isDestroyed()){
-			GameAnimation a = new GameAnimation(image, 8,30,speed,direction,0);
-			a.render(g2d);
-			a.updateAnimation();
+			a.start(g2d);
+			System.out.println("draw" + a.getCurrentFrame());
 			return;
 		}
 		else{
-			GameAnimation b= new GameAnimation(diedImage,9,30,0,direction,0);
 			b.render(g2d);
 			b.updateAnimation();
 			if(b.getCurrentFrame() == b.getFrameCount())isVisible = false;
-		}
+		}*/
 		
 	}
 	@Override
@@ -167,5 +217,6 @@ public class Zombie implements IRenderable,Runnable{
 		Player.addMoney(money);
 		return true;
 	}
+	
 	
 }

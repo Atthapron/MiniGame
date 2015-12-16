@@ -45,8 +45,6 @@ public class DrawingUtility {
 		g2d.drawString("Rifle : 30", 361, 10);
 		
 		
-		
-		
 		// start zombie button
 		g2d.drawImage(Resource.start_bt, null, 480, 10);
 		g2d.setColor(Color.white.darker());

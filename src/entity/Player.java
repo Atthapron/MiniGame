@@ -5,8 +5,8 @@ public class Player {
 	private static int money;
 	static{
 		Player.score = 0;
-		Player.money = 1200;
-		if(money<0)Player.money = 0;
+		Player.money = 30;
+		
 	}
 	
 	public static void addMoney(int getMoney){
@@ -14,6 +14,7 @@ public class Player {
 	}
 	public static  void pay(int payMoney){
 		Player.money -= payMoney;
+		if(money<0)Player.money = 0;
 	}
 	public  static void addScore(int score){
 		Player.score += score;

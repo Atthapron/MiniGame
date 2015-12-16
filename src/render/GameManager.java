@@ -18,10 +18,11 @@ public class GameManager {
 	private Field field;
 	private ArrayList<Zombie> zombies;
 	private ArrayList<Shooter> shooters;
-	private static final int SPAWN_DEALY = 100;
+	private static final int SPAWN_DEALY = 500;
 	private int spawnDelayCounter;
 	private int zombieBoyCounter;
 	private int zombieDoctorCouter;
+	
 	
 	public Thread zombieSpawnThread;
 	public Thread placeShooterThread;
@@ -57,6 +58,11 @@ public class GameManager {
 			placeShooter(InputUtility.type);
 			System.out.println("update");
 			InputUtility.updateType();
+		}
+		System.out.println("go " + InputUtility.zombieGo);
+		if(InputUtility.zombieGo){
+			spawnZombie();
+			
 		}
 		/*if(InputUtility.startGame){
 			placeShooterThread.start();
@@ -96,31 +102,43 @@ public class GameManager {
 	public  void spawnZombie(){
 		spawnDelayCounter++;
 		String type = "";
-		if(Math.random()>=0.5)type = "boyzombie";
-		else type = "doctorZombie";
 		if(spawnDelayCounter >= SPAWN_DEALY){
 			spawnDelayCounter = 0;
+			if(Math.random()>=0.5)type = "boyzombie";
+			else type = "doctorZombie";
 			//ห้ามมีเกินกี่ตัว
-			if(zombieBoyCounter>30){
+			System.out.println(zombieBoyCounter + "zombieCounter");
+			if(zombieBoyCounter>1){
 				type = "doctorZombie";
 				return;
 			}
-			if(zombieDoctorCouter>30){
+			if(zombieDoctorCouter>1){
 				type = "boyzombie";
 				return;
 			}
-			if(zombieBoyCounter>30 && zombieDoctorCouter>30){
+			if(zombieBoyCounter>1 && zombieDoctorCouter>1){
 				zombieSpawnThread.interrupt();
 				return;
 			}
-			Zombie zombie = new Zombie(type, new Point(0, 0), Direction.RIGHT, field);
-			//new Point() start point
+			Zombie zombie = new Zombie(type, new Point(Zombie.startX, Zombie.startY), Direction.RIGHT, field);
+			Thread a = new Thread(zombie);
+			a.start();
 			RenderableHolder.getInstance().add(zombie);
-			new Thread(zombie).start();
 			zombies.add(zombie);
 			if(type.equalsIgnoreCase("boyZombie"))zombieBoyCounter++;
 			if(type.equalsIgnoreCase("doctorZombie"))zombieDoctorCouter++;
+			System.out.println(zombieBoyCounter);
+			InputUtility.updateZombieGo();
+			/*
+		
+		System.out.println("spawnDelayCounter " +spawnDelayCounter);
+		
+			//new Point() start point
+			System.out.println("afsdhfddfghjhgdfg" + zombie.getImage().getHeight());
 			
+			zombies.add(zombie);
+			
+		*/	
 		}
 	}
 	public  void placeShooter(String type){

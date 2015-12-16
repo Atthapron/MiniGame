@@ -28,10 +28,12 @@ public class RenderableHolder {
 				return -1;
 			}
 		});
+		if(entities.size() != 0){
 		for(IRenderable entityq : entities){
 			if(entityq.isDestroyed()){
 				entities.remove(entityq);
 			}
+		}
 		}
 	}
 

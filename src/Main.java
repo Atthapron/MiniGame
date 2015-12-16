@@ -32,24 +32,16 @@ public class Main {
 		GameManager gameManager  = new GameManager();
 		f.setShooterPosition(0,0);
 		
-		Thread a = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
+
 				while(true){
 					if(InputUtility.startGame){
-						gameWindow.switchScene(p1);
-						System.out.println(InputUtility.startGame+" e");	
+						gameWindow.switchScene(p1);	
 						//gameManager.startGameManager();
 						gameManager.update();
-						System.out.println(RenderableHolder.getInstance().getRenderableList().size());
 					}
 					p1.repaint();
 				}
 		
-			}
-		});
-		a.start();
 	
 	}
 

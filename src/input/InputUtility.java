@@ -11,7 +11,8 @@ public class InputUtility {
 	public static String type = ""; 
 	public static boolean startGame = false;
 	public static boolean CLICK = false;
-	
+	public static boolean zombieGo = false;
+	public static boolean isGameOver = false;
 	
 	public static void mouseLeftDown(){
 		isLeftDown = true;
@@ -35,19 +36,16 @@ public class InputUtility {
 	public static void updateType(){
 		InputUtility.type = "";
 	}
-	public static boolean clickGo(){
+	
+	public static void clickGo(){
 		if(InputUtility.mouseOnScreen && 
-				mouseX>480 && mouseX<Resource.start_bt.getWidth()+480 &&
-				mouseY>10 && mouseY<Resource.start_bt.getHeight()+10 &&
-				isLeftClickedLastTick
-				){
-			System.out.print(true);
-			return true;
-			
+				mouseX>480 && mouseX<64 + 480 &&
+				mouseY>10 && mouseY<64 + 10 &&
+				isLeftClickedLastTick){
+				zombieGo =  true;
+				return;
 		}
-		System.out.print(false);
-		return false;
-			
+		zombieGo =  false;
 	}
 	public static void setShooterClicked(){
 		if(InputUtility.mouseOnScreen && 
@@ -68,9 +66,11 @@ public class InputUtility {
 		System.out.print(type);
 	}
 	
-	
+
 	public static void updateStartGame(){
 		startGame = false;
 	}
-	
+	public static void updateZombieGo(){
+		zombieGo = false;
+	}
 }

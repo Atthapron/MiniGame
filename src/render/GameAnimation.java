@@ -1,20 +1,25 @@
 package render;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
-public class GameAnimation{
+import utility.Direction;
+
+public class GameAnimation {
 	private BufferedImage image = null;
 	private int frameCount, frameDelay;
 	private int currentFrame, frameDelayCount;
-	private int x,y,frameWidth,frameHeight;
+	private int x, y, frameWidth, frameHeight;
 	private boolean visible = false;
 	private boolean playing = false;
 	private int speed;
 	private int direction;
+	private int prevDirection = 0;
 	private double theta;
-	public GameAnimation(BufferedImage image, int frameCount, int frameDelay,int speed, int direction, double theta){
+
+	public GameAnimation(BufferedImage image, int frameCount, int frameDelay, int speed, int direction, double theta) {
 		this.image = image;
 		this.frameCount = frameCount;
 		this.frameDelay = frameDelay;
@@ -22,97 +27,102 @@ public class GameAnimation{
 		this.speed = speed;
 		this.direction = direction;
 		this.theta = theta;
-		try{
-			this.frameWidth = image.getWidth()/frameCount;
+		play();
+		try {
+			this.frameWidth = image.getWidth() / frameCount;
 			this.frameHeight = image.getHeight();
-		}catch (NullPointerException e){
+		} catch (NullPointerException e) {
 			this.frameWidth = 0;
 			this.frameHeight = 0;
 		}
 	}
-	
-	public void topLeftAnimationAt(int x, int y){
+
+	public void topLeftAnimationAt(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	public void centerAnimationAt(int x, int y){
-		this.x = x - frameWidth/2;
-		this.y = y - frameHeight/2;
+
+	public void centerAnimationAt(int x, int y) {
+		this.x = x - frameWidth / 2;
+		this.y = y - frameHeight / 2;
 	}
-	public void play(){
+
+	public void play() {
 		currentFrame = 0;
 		playing = true;
 		visible = true;
 	}
-	public void stop(){
+
+	public void stop() {
 		currentFrame = 0;
 		playing = false;
 		visible = false;
 	}
-	public void updateAnimation(){
-		if(playing == true){
-			if(frameDelayCount>0){
+
+	public void updateAnimation() {
+		if (playing == true) {
+			if (frameDelayCount > 0) {
 				frameDelayCount--;
 				return;
 			}
-			if(frameDelayCount == 0){
+			if (frameDelayCount <= 0) {
 				frameDelayCount = frameDelay;
 				currentFrame++;
-				move();
+				
 			}
-			if(currentFrame == frameCount){
+			if (currentFrame == frameCount) {
 				currentFrame = 0;
 			}
 		}
 	}
-	public void move(){
-		if(direction == 0){
+
+	public void move() {
+		if (direction == 0) {
 			this.y -= this.speed;
 		}
-		if(direction == 1){
+		if (direction == 1) {
 			this.y += this.speed;
 		}
-		if(direction == 2){
+		if (direction == 2) {
 			this.x -= this.speed;
 		}
-		if(direction == 3){
+		if (direction == 3) {
 			this.x += this.speed;
 		}
 	}
-	
-	public boolean isVisible(){
+
+	public boolean isVisible() {
 		return visible;
 	}
-	public int getZ(){
+
+	public int getZ() {
 		return 20;
 	}
-	public void render(Graphics2D g2) throws RasterFormatException{
-		if(visible == true && image != null){
-			g2.drawImage(image.getSubimage(currentFrame*frameWidth, 0, frameWidth, frameHeight),x,y,frameWidth,frameHeight,null);
-			if(direction == 1){
-				return;
-			}
-			else if(direction == 2){
-				g2.rotate(Math.PI, x + frameWidth/2, y+frameHeight/2);
-			}
-			else if(direction == 3){
-				g2.rotate(Math.PI/2 ,x + frameWidth/2,y + frameHeight/2);
-			}
-			else if(direction == 4){
-				g2.rotate(Math.PI*3/2, x + frameWidth/2, y+frameHeight/2);
-			}
-			else {
-				g2.rotate(theta,x + frameWidth/2, y+frameHeight/2);
+
+	public void render(Graphics2D g2) {
+		if (visible == true && image != null) {
+			// g2.drawImage(image.getSubimage(currentFrame*frameWidth, 0,
+			// frameWidth, frameHeight),x,y,frameWidth,frameHeight,null);
+			double angle = 0;
+			if(direction==1)angle = 0;
+			if(direction==2)angle = Math.PI;
+			if(direction==3)angle = Math.PI*3/2;
+			if(direction==4)angle = Math.PI/2;
+			AffineTransform at = new AffineTransform();
+			at.translate(x, y);
+			at.rotate(angle);
+			at.scale(1, 1);
+			g2.drawImage(image.getSubimage(currentFrame * frameWidth, 0, frameWidth, frameHeight), at, null);
+			
 			}
 		}
+	
+
+	public void start(Graphics2D g2) {
+				render(g2);
+				updateAnimation();
 	}
-	public void start(Graphics2D g2){
-		this.updateAnimation();
-		this.render(g2);
-	}
-	
-	
-	
+
 	public BufferedImage getImage() {
 		return image;
 	}
@@ -197,9 +207,17 @@ public class GameAnimation{
 		this.visible = visible;
 	}
 
-	
-	
-	
-	
-	
+	public void setCenterAt(int x, int y) {
+		this.x = x - 32;
+		this.y = y - 32;
+	}
+
+	public void setTopLeftAt(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	public void br(){
+		
+	}
+
 }

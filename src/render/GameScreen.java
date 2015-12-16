@@ -62,6 +62,7 @@ public class GameScreen extends JComponent {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				InputUtility.setShooterClicked();
+				InputUtility.clickGo();
 				InputUtility.CLICK = true;
 			}
 		});
@@ -74,9 +75,9 @@ public class GameScreen extends JComponent {
 				if (InputUtility.mouseOnScreen) {
 					InputUtility.mouseX = e.getX();
 					InputUtility.mouseY = e.getY();
-					System.out.print("x:"+ InputUtility.mouseX);
-					System.out.println(" y:" + InputUtility.mouseY);
-
+					System.out.print("x:" + InputUtility.mouseX);
+					System.out.println("y:" + InputUtility.mouseY);
+					
 				}
 
 			}
