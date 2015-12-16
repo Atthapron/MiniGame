@@ -33,7 +33,7 @@ public class Main {
 		f.setShooterPosition(0,0);
 		
 
-				while(true){
+				while(!InputUtility.isGameOver){
 					if(InputUtility.startGame){
 						gameWindow.switchScene(p1);	
 						//gameManager.startGameManager();

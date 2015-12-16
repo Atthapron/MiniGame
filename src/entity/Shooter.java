@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +43,7 @@ public class Shooter implements IRenderable, Runnable{
 		if(type.equalsIgnoreCase("handgun")){
 			this.cost = 5;
 			this.attack = 1;
-			this.range = 5;
+			this.range = 300;
 			this.shootDelay = 5;
 			this.image = Resource.handGunIdleSprite;
 			this.shootImage = Resource.handGunShootSprite;
@@ -51,7 +52,7 @@ public class Shooter implements IRenderable, Runnable{
 		if(type.equalsIgnoreCase("rifle")){
 			this.cost = 10;
 			this.attack = 6;
-			this.range = 8;
+			this.range = 400;
 			this.shootDelay = 1;
 			this.image = Resource.rifleIdleSprite;
 			this.shootImage = Resource.rifleShootSprite;
@@ -60,7 +61,7 @@ public class Shooter implements IRenderable, Runnable{
 		if(type.equalsIgnoreCase("shotgun")){
 			this.cost = 15;
 			this.attack = 8;
-			this.range =  3;
+			this.range =  200;
 			this.shootDelay = 3;
 			this.image = Resource.shotGunIdleSprite;
 			this.shootImage = Resource.shotGunShootSprite;
@@ -74,7 +75,7 @@ public class Shooter implements IRenderable, Runnable{
 	}
 	public boolean ready(){
 		if(shootDelay < shootDelayCount){
-			shootDelayCount++;
+			shootDelay++;
 			return false;
 		}
 		return true;
@@ -107,7 +108,7 @@ public class Shooter implements IRenderable, Runnable{
 	public boolean shoot(){
 		if(ready()){
 			zombiesInRange.get(0).takeDamage(attack);
-			shootDelayCount = 0;
+			shootDelay = 0;
 			Resource.shootSound.play();
 			
 			return true;
@@ -153,7 +154,11 @@ public class Shooter implements IRenderable, Runnable{
 	public String getType(){
 		return type;
 	}
-
+	public ArrayList<Zombie> getZombieInRange(){
+		return zombiesInRange;
+	}
+		
+	
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
@@ -177,9 +182,15 @@ public class Shooter implements IRenderable, Runnable{
 			Zombie nearestZombie = zombiesInRange.get(0);
 			double theta = Math.asin((nearestZombie.position.y - position.y)/Maths.distance(nearestZombie.position, getCenterPoint()));
 			if(nearestZombie.position.x < position.x)theta = Math.PI - theta;
-			if(shoot())new GameAnimation(shootImage, 3, 30, 0, 0,theta);
-			g2d.rotate(theta, position.x + 32, position.y + 32);
-		
+			if(shoot()){
+				//new GameAnimation(shootImage, 3, 30, 0, 0,theta);
+				AffineTransform at = new AffineTransform();
+				at.scale(1, 1);
+				at.rotate(theta);
+				at.translate(position.x + 32, position.y + 32);
+				g2d.drawImage(shootImage.getSubimage(0, 0,64, 64), at, null);
+				//g2d.rotate(theta, position.x + 32, position.y + 32);
+			}
 		}
 		
 	}
@@ -203,16 +214,15 @@ public class Shooter implements IRenderable, Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		try{
-			Thread.sleep(50);
+		
 			while(isBought){
 				if(zombiesInRange.size() > 0){
+					System.out.print("xxsatweygexxxxxxxxxxxxxxxxxxxxxxx");
 					if(ready())shoot();
+				
 				}
 			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+			
 	}
 	public void setVisible(boolean visible){
 		isVisible = visible;

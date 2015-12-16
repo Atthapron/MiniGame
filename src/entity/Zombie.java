@@ -89,6 +89,7 @@ public class Zombie implements IRenderable,Runnable{
 		if(direction == Direction.RIGHT){
 			this.position.x = (int) (position.x + speed);
 		}
+		
 	}
 	public void turn(Field field){
 		int x = position.x+32;

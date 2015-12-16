@@ -49,7 +49,6 @@ public class GameManager {
 		});
 		
 	}
-	@SuppressWarnings("deprecation")
 	public void update(){
 		
 		if(InputUtility.type.length() != 0){
@@ -61,8 +60,13 @@ public class GameManager {
 		}
 		System.out.println("go " + InputUtility.zombieGo);
 		if(InputUtility.zombieGo){
+			for(Shooter s : shooters)new Thread(s).start();
 			spawnZombie();
-			
+		}
+		for(Shooter s : shooters){
+			for(Zombie z : zombies){
+				s.addTarget(z);
+			}
 		}
 		/*if(InputUtility.startGame){
 			placeShooterThread.start();
